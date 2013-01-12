@@ -10,6 +10,8 @@
 
 #import "ADSDataViewController.h"
 
+#import "UIImage+animatedGIF.h"
+
 /*
  A controller object that manages a simple model -- a collection of month names.
  
@@ -36,8 +38,28 @@
     self = [super init];
     if (self) {
         // Create the data model.
-        NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-        _pageData = [[dateFormatter monthSymbols] copy];
+        // NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
+        // _pageData = [[dateFormatter monthSymbols] copy];
+        
+        NSMutableArray *tmpPageData = [NSMutableArray array];
+
+        // for ( NSString *gifFile in [NSArray arrayWithObjects:@"wallet-blam.gif",@"head-bounce.gif",@"cat-run.gif",nil] ) {
+        for ( NSString *gifFile in [NSArray arrayWithObjects:@"head-bounce.gif",nil] ) {
+
+            NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:gifFile];
+            NSURL *tmpGIFUrl = [NSURL fileURLWithPath:path isDirectory:NO];
+            UIImage *tmpGIF = [UIImage animatedImageWithAnimatedGIFURL:tmpGIFUrl duration:5.0f];
+            if ( tmpGIF ) {
+                [tmpPageData addObject:tmpGIF];
+                [tmpPageData addObject:tmpGIF];
+                [tmpPageData addObject:tmpGIF];
+            } else {
+                NSLog(@"error loading %@",tmpGIFUrl);
+            }
+        }
+        
+        _pageData = [[NSArray arrayWithArray:tmpPageData] retain];
+        
     }
     return self;
 }

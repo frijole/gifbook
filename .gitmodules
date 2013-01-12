@@ -1,0 +1,3 @@
+[submodule "submodules/animatedgif"]
+	path = submodules/animatedgif
+	url = https://github.com/mayoff/uiimage-from-animated-gif.git

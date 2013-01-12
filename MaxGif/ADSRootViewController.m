@@ -32,12 +32,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     // Configure the page view controller and add it as a child view controller.
-    self.pageViewController = [[[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil] autorelease];
+    self.pageViewController = [[[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil] autorelease];
     self.pageViewController.delegate = self;
 
     ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     NSArray *viewControllers = @[startingViewController];
-    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:NULL];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationOrientationHorizontal animated:NO completion:NULL];
 
     self.pageViewController.dataSource = self.modelController;
 
@@ -46,9 +46,9 @@
 
     // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
     CGRect pageViewRect = self.view.bounds;
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        pageViewRect = CGRectInset(pageViewRect, 40.0, 40.0);
-    }
+    // if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        pageViewRect = CGRectInset(pageViewRect, 1.0, 1.0);
+    // }
     self.pageViewController.view.frame = pageViewRect;
 
     [self.pageViewController didMoveToParentViewController:self];
@@ -84,6 +84,9 @@
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
+    // always one page on the top
+    return UIPageViewControllerSpineLocationMin;
+    
     if (UIInterfaceOrientationIsPortrait(orientation) || ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone)) {
         // In portrait orientation or on iPhone: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to YES, so set it to NO here.
         

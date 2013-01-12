@@ -10,7 +10,9 @@
 
 @interface ADSDataViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (strong, nonatomic) IBOutlet UILabel *dataLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) id dataObject;
 
 @end
