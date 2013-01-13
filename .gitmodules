@@ -1,3 +1,9 @@
 [submodule "submodules/animatedgif"]
 	path = submodules/animatedgif
 	url = https://github.com/mayoff/uiimage-from-animated-gif.git
+[submodule "submodules/AFNetworking"]
+	path = submodules/AFNetworking
+	url = https://github.com/AFNetworking/AFNetworking.git
+[submodule "submodules/iOS_AnimatedGIF"]
+	path = submodules/iOS_AnimatedGIF
+	url = https://github.com/scspijker/iOS_AnimatedGif.git

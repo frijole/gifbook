@@ -7,10 +7,10 @@
 //
 
 #import "ADSDataViewController.h"
-
 #import <QuartzCore/QuartzCore.h>
-
 #import "UIImage+animatedGIF.h"
+#import "AnimatedGIF.h"
+#import "AFNetworking.h"
 
 @interface ADSDataViewController ()
 
@@ -131,7 +131,27 @@
     if ( [self.dataObject isKindOfClass:[UIImage class]]) {
         [self.imageView setImage:self.dataObject];
     } else if ( [self.dataObject isKindOfClass:[NSURL class]] ) {
-        [self.imageView setImage:[UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f]];
+
+        // animation!
+        UIImageView *tmpAnimatedGIF = [AnimatedGif getAnimationForGifAtUrl:self.dataObject];
+
+        // copy over properties
+        [tmpAnimatedGIF setFrame:self.imageView.frame];
+        [tmpAnimatedGIF setContentMode:self.imageView.contentMode];
+        for ( NSLayoutConstraint *tmpConstraint in self.imageView.constraints ) {
+            [tmpAnimatedGIF addConstraint:tmpConstraint];
+        }
+        
+        // add it
+        [self.view addSubview:tmpAnimatedGIF];
+
+        // get rid of the old imageview
+        [self.imageView removeFromSuperview];
+        self.imageView = nil;
+        
+        // replace the property
+        [self setImageView:tmpAnimatedGIF];
+    
     }
 }
 
