@@ -43,16 +43,12 @@
         
         NSMutableArray *tmpPageData = [NSMutableArray array];
 
-        // for ( NSString *gifFile in [NSArray arrayWithObjects:@"wallet-blam.gif",@"head-bounce.gif",@"cat-run.gif",nil] ) {
-        for ( NSString *gifFile in [NSArray arrayWithObjects:@"head-bounce.gif",nil] ) {
-
+       for ( NSString *gifFile in [NSArray arrayWithObjects:@"wallet-blam.gif",@"head-bounce.gif",@"cat-run.gif",nil] ) {
             NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:gifFile];
             NSURL *tmpGIFUrl = [NSURL fileURLWithPath:path isDirectory:NO];
             UIImage *tmpGIF = [UIImage animatedImageWithAnimatedGIFURL:tmpGIFUrl duration:5.0f];
             if ( tmpGIF ) {
-                [tmpPageData addObject:tmpGIF];
-                [tmpPageData addObject:tmpGIF];
-                [tmpPageData addObject:tmpGIF];
+                [tmpPageData addObject:tmpGIFUrl];
             } else {
                 NSLog(@"error loading %@",tmpGIFUrl);
             }

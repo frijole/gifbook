@@ -10,6 +10,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+#import "UIImage+animatedGIF.h"
+
 @interface ADSDataViewController ()
 
 @end
@@ -128,6 +130,8 @@
     
     if ( [self.dataObject isKindOfClass:[UIImage class]]) {
         [self.imageView setImage:self.dataObject];
+    } else if ( [self.dataObject isKindOfClass:[NSURL class]] ) {
+        [self.imageView setImage:[UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f]];
     }
 }
 
