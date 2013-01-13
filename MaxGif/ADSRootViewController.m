@@ -14,6 +14,7 @@
 
 @interface ADSRootViewController ()
 @property (readonly, strong, nonatomic) ADSModelController *modelController;
+@property (strong, nonatomic) UIImageView *pageCurl;
 @end
 
 @implementation ADSRootViewController
@@ -54,7 +55,7 @@
     [self.pageViewController didMoveToParentViewController:self];
 
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
-    self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    // self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,12 +76,18 @@
 
 #pragma mark - UIPageViewController delegate methods
 
-/*
-- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
-{
-    
-}
- */
+//- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+//{
+//    
+//    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"transitionStarting" object:nil]];
+//}
+//
+//
+//- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+//{
+//    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"transitionDone" object:nil]];
+//}
+
 
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {

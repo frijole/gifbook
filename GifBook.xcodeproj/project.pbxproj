@@ -427,6 +427,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaxGif/GifBook-Prefix.pch";
 				INFOPLIST_FILE = "MaxGif/GifBook-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = GifBook;
 				WRAPPER_EXTENSION = app;
 			};
@@ -438,6 +439,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaxGif/GifBook-Prefix.pch";
 				INFOPLIST_FILE = "MaxGif/GifBook-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = GifBook;
 				WRAPPER_EXTENSION = app;
 			};

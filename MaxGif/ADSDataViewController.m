@@ -45,6 +45,7 @@
     [tmpTapRecognizer requireGestureRecognizerToFail:tmpDoubleTapRecognizer];
     [self.imageView addGestureRecognizer:tmpTapRecognizer];
     [tmpTapRecognizer release];
+
 }
 
 - (void)tapped
@@ -91,7 +92,7 @@
 
 - (void)showFooter
 {
-    if ( [self.footerView isHidden] ) {
+    if ( self.footerView && [self.footerView isHidden] ) {
         [self.footerView setAlpha:0.0f]; // just to be sure
         [self.footerView setHidden:NO]; // show it
         
@@ -106,7 +107,7 @@
 
 - (void)hideFooter
 {
-    if ( [self.footerView isHidden] == NO ) {
+    if ( self.footerView && [self.footerView isHidden] == NO ) {
        
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
         [UIView animateWithDuration:0.2f
@@ -143,6 +144,17 @@
     }
     
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.imageView startAnimating];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.imageView stopAnimating];
+}
+
 
 - (void)share:(id)sender
 {
