@@ -11,11 +11,11 @@
 @interface ADSDataViewController : UIViewController
 
 @property (strong, nonatomic) IBOutlet UIView *footerView;
-@property (strong, nonatomic) IBOutlet UILabel *dataLabel;
-@property (strong, nonatomic) IBOutlet UIButton *tweetButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *labelItem;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareItem;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) id dataObject;
 
-- (IBAction)tweet:(id)sender;
+- (IBAction)share:(id)sender;
 
 @end

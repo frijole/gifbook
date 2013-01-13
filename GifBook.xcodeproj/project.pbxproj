@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C636F0516A2071D0079C315 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C636F0316A2071D0079C315 /* MainStoryboard_iPhone.storyboard */; };
 		3C636F0916A20BE70079C315 /* head-bounce.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3C636F0616A20BE70079C315 /* head-bounce.gif */; };
 		3C636F0A16A20BE70079C315 /* wallet-blam.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3C636F0716A20BE70079C315 /* wallet-blam.gif */; };
 		3C636F0B16A20BE70079C315 /* cat-run.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3C636F0816A20BE70079C315 /* cat-run.gif */; };
@@ -24,6 +23,8 @@
 		3C636F9F16A2F9750079C315 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636F9616A2F9750079C315 /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3C636FA516A30BD70079C315 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA416A30BD70079C315 /* MobileCoreServices.framework */; };
 		3C636FA716A30BEA0079C315 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */; };
+		3C636FA916A30E0E0079C315 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA816A30E0E0079C315 /* Social.framework */; };
+		3C636FB016A3239E0079C315 /* AnimatedGif.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636FAF16A3239E0079C315 /* AnimatedGif.m */; };
 		3CCAC98016A1FDAD004B1C10 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */; };
 		3CD0C25216A1266B00B229A3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD0C25116A1266B00B229A3 /* UIKit.framework */; };
 		3CD0C25416A1266B00B229A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD0C25316A1266B00B229A3 /* Foundation.framework */; };
@@ -37,12 +38,11 @@
 		3CD0C26B16A1266B00B229A3 /* ADSRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C26A16A1266B00B229A3 /* ADSRootViewController.m */; };
 		3CD0C26E16A1266B00B229A3 /* ADSDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C26D16A1266B00B229A3 /* ADSDataViewController.m */; };
 		3CD0C27116A1266B00B229A3 /* ADSModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C27016A1266B00B229A3 /* ADSModelController.m */; };
-		3CD0C27716A1266B00B229A3 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CD0C27516A1266B00B229A3 /* MainStoryboard_iPad.storyboard */; };
+		3CD0C27716A1266B00B229A3 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CD0C27516A1266B00B229A3 /* MainStoryboard.storyboard */; };
 		3CD0C27F16A1271C00B229A3 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C27E16A1271C00B229A3 /* UIImage+animatedGIF.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3C636F0416A2071D0079C315 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		3C636F0616A20BE70079C315 /* head-bounce.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "head-bounce.gif"; sourceTree = "<group>"; };
 		3C636F0716A20BE70079C315 /* wallet-blam.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "wallet-blam.gif"; sourceTree = "<group>"; };
 		3C636F0816A20BE70079C315 /* cat-run.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "cat-run.gif"; sourceTree = "<group>"; };
@@ -71,15 +71,18 @@
 		3C636FA116A3079A0079C315 /* AnimatedGif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimatedGif.m; path = submodules/iOS_AnimatedGIF/Classes/AnimatedGif.m; sourceTree = "<group>"; };
 		3C636FA416A30BD70079C315 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3C636FA816A30E0E0079C315 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		3C636FAE16A3239E0079C315 /* AnimatedGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedGif.h; path = "submodules/Animated-GIF-iPhone/Classes/AnimatedGif.h"; sourceTree = "<group>"; };
+		3C636FAF16A3239E0079C315 /* AnimatedGif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimatedGif.m; path = "submodules/Animated-GIF-iPhone/Classes/AnimatedGif.m"; sourceTree = "<group>"; };
 		3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		3CD0C24D16A1266B00B229A3 /* MaxGif.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaxGif.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CD0C24D16A1266B00B229A3 /* GifBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GifBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD0C25116A1266B00B229A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3CD0C25316A1266B00B229A3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3CD0C25516A1266B00B229A3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		3CD0C25916A1266B00B229A3 /* MaxGif-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaxGif-Info.plist"; sourceTree = "<group>"; };
+		3CD0C25916A1266B00B229A3 /* GifBook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GifBook-Info.plist"; sourceTree = "<group>"; };
 		3CD0C25B16A1266B00B229A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CD0C25D16A1266B00B229A3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		3CD0C25F16A1266B00B229A3 /* MaxGif-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MaxGif-Prefix.pch"; sourceTree = "<group>"; };
+		3CD0C25F16A1266B00B229A3 /* GifBook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GifBook-Prefix.pch"; sourceTree = "<group>"; };
 		3CD0C26016A1266B00B229A3 /* ADSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADSAppDelegate.h; sourceTree = "<group>"; };
 		3CD0C26116A1266B00B229A3 /* ADSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADSAppDelegate.m; sourceTree = "<group>"; };
 		3CD0C26316A1266B00B229A3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -91,7 +94,7 @@
 		3CD0C26D16A1266B00B229A3 /* ADSDataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADSDataViewController.m; sourceTree = "<group>"; };
 		3CD0C26F16A1266B00B229A3 /* ADSModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADSModelController.h; sourceTree = "<group>"; };
 		3CD0C27016A1266B00B229A3 /* ADSModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADSModelController.m; sourceTree = "<group>"; };
-		3CD0C27616A1266B00B229A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		3CD0C27616A1266B00B229A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3CD0C27D16A1271C00B229A3 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "submodules/animatedgif/uiimage-from-animated-gif/UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		3CD0C27E16A1271C00B229A3 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "submodules/animatedgif/uiimage-from-animated-gif/UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +111,7 @@
 				3C636F0F16A213050079C315 /* QuartzCore.framework in Frameworks */,
 				3C636FA516A30BD70079C315 /* MobileCoreServices.framework in Frameworks */,
 				3C636FA716A30BEA0079C315 /* SystemConfiguration.framework in Frameworks */,
+				3C636FA916A30E0E0079C315 /* Social.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +164,15 @@
 			name = iOS_AnimatdGIF;
 			sourceTree = "<group>";
 		};
+		3C636FB116A323A20079C315 /* Animatd-GIF-IPhone */ = {
+			isa = PBXGroup;
+			children = (
+				3C636FAE16A3239E0079C315 /* AnimatedGif.h */,
+				3C636FAF16A3239E0079C315 /* AnimatedGif.m */,
+			);
+			name = "Animatd-GIF-IPhone";
+			sourceTree = "<group>";
+		};
 		3CD0C24216A1266B00B229A3 = {
 			isa = PBXGroup;
 			children = (
@@ -173,7 +186,7 @@
 		3CD0C24E16A1266B00B229A3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3CD0C24D16A1266B00B229A3 /* MaxGif.app */,
+				3CD0C24D16A1266B00B229A3 /* GifBook.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -188,6 +201,7 @@
 				3C636F0D16A212FA0079C315 /* QuartzCore.framework */,
 				3C636FA416A30BD70079C315 /* MobileCoreServices.framework */,
 				3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */,
+				3C636FA816A30E0E0079C315 /* Social.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,8 +217,7 @@
 				3CD0C26D16A1266B00B229A3 /* ADSDataViewController.m */,
 				3CD0C26F16A1266B00B229A3 /* ADSModelController.h */,
 				3CD0C27016A1266B00B229A3 /* ADSModelController.m */,
-				3CD0C27516A1266B00B229A3 /* MainStoryboard_iPad.storyboard */,
-				3C636F0316A2071D0079C315 /* MainStoryboard_iPhone.storyboard */,
+				3CD0C27516A1266B00B229A3 /* MainStoryboard.storyboard */,
 				3CD0C25816A1266B00B229A3 /* Supporting Files */,
 			);
 			path = MaxGif;
@@ -213,10 +226,10 @@
 		3CD0C25816A1266B00B229A3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				3CD0C25916A1266B00B229A3 /* MaxGif-Info.plist */,
+				3CD0C25916A1266B00B229A3 /* GifBook-Info.plist */,
 				3CD0C25A16A1266B00B229A3 /* InfoPlist.strings */,
 				3CD0C25D16A1266B00B229A3 /* main.m */,
-				3CD0C25F16A1266B00B229A3 /* MaxGif-Prefix.pch */,
+				3CD0C25F16A1266B00B229A3 /* GifBook-Prefix.pch */,
 				3C636F1016A2182A0079C315 /* Icon@2x.png */,
 				3CD0C26316A1266B00B229A3 /* Default.png */,
 				3CD0C26516A1266B00B229A3 /* Default@2x.png */,
@@ -238,6 +251,7 @@
 		3CD0C28116A1272700B229A3 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
+				3C636FB116A323A20079C315 /* Animatd-GIF-IPhone */,
 				3C636FA316A3079E0079C315 /* iOS_AnimatdGIF */,
 				3C636F1216A2F94F0079C315 /* AFNetworking */,
 				3CD0C28016A1272000B229A3 /* animatedGIF */,
@@ -248,9 +262,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3CD0C24C16A1266B00B229A3 /* MaxGif */ = {
+		3CD0C24C16A1266B00B229A3 /* GifBook */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3CD0C27A16A1266B00B229A3 /* Build configuration list for PBXNativeTarget "MaxGif" */;
+			buildConfigurationList = 3CD0C27A16A1266B00B229A3 /* Build configuration list for PBXNativeTarget "GifBook" */;
 			buildPhases = (
 				3CD0C24916A1266B00B229A3 /* Sources */,
 				3CD0C24A16A1266B00B229A3 /* Frameworks */,
@@ -260,9 +274,9 @@
 			);
 			dependencies = (
 			);
-			name = MaxGif;
+			name = GifBook;
 			productName = MaxGif;
-			productReference = 3CD0C24D16A1266B00B229A3 /* MaxGif.app */;
+			productReference = 3CD0C24D16A1266B00B229A3 /* GifBook.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -275,7 +289,7 @@
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = "Adelie Software";
 			};
-			buildConfigurationList = 3CD0C24716A1266B00B229A3 /* Build configuration list for PBXProject "MaxGif" */;
+			buildConfigurationList = 3CD0C24716A1266B00B229A3 /* Build configuration list for PBXProject "GifBook" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -287,7 +301,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3CD0C24C16A1266B00B229A3 /* MaxGif */,
+				3CD0C24C16A1266B00B229A3 /* GifBook */,
 			);
 		};
 /* End PBXProject section */
@@ -301,8 +315,7 @@
 				3CD0C26416A1266B00B229A3 /* Default.png in Resources */,
 				3CD0C26616A1266B00B229A3 /* Default@2x.png in Resources */,
 				3CD0C26816A1266B00B229A3 /* Default-568h@2x.png in Resources */,
-				3CD0C27716A1266B00B229A3 /* MainStoryboard_iPad.storyboard in Resources */,
-				3C636F0516A2071D0079C315 /* MainStoryboard_iPhone.storyboard in Resources */,
+				3CD0C27716A1266B00B229A3 /* MainStoryboard.storyboard in Resources */,
 				3C636F0916A20BE70079C315 /* head-bounce.gif in Resources */,
 				3C636F0A16A20BE70079C315 /* wallet-blam.gif in Resources */,
 				3C636F0B16A20BE70079C315 /* cat-run.gif in Resources */,
@@ -332,20 +345,13 @@
 				3C636F9D16A2F9750079C315 /* AFURLConnectionOperation.m in Sources */,
 				3C636F9E16A2F9750079C315 /* AFXMLRequestOperation.m in Sources */,
 				3C636F9F16A2F9750079C315 /* UIImageView+AFNetworking.m in Sources */,
+				3C636FB016A3239E0079C315 /* AnimatedGif.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3C636F0316A2071D0079C315 /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C636F0416A2071D0079C315 /* en */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
 		3CD0C25A16A1266B00B229A3 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -354,12 +360,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3CD0C27516A1266B00B229A3 /* MainStoryboard_iPad.storyboard */ = {
+		3CD0C27516A1266B00B229A3 /* MainStoryboard.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3CD0C27616A1266B00B229A3 /* en */,
 			);
-			name = MainStoryboard_iPad.storyboard;
+			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -419,9 +425,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MaxGif/MaxGif-Prefix.pch";
-				INFOPLIST_FILE = "MaxGif/MaxGif-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "MaxGif/GifBook-Prefix.pch";
+				INFOPLIST_FILE = "MaxGif/GifBook-Info.plist";
+				PRODUCT_NAME = GifBook;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -430,9 +436,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MaxGif/MaxGif-Prefix.pch";
-				INFOPLIST_FILE = "MaxGif/MaxGif-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "MaxGif/GifBook-Prefix.pch";
+				INFOPLIST_FILE = "MaxGif/GifBook-Info.plist";
+				PRODUCT_NAME = GifBook;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -440,7 +446,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3CD0C24716A1266B00B229A3 /* Build configuration list for PBXProject "MaxGif" */ = {
+		3CD0C24716A1266B00B229A3 /* Build configuration list for PBXProject "GifBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CD0C27816A1266B00B229A3 /* Debug */,
@@ -449,7 +455,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3CD0C27A16A1266B00B229A3 /* Build configuration list for PBXNativeTarget "MaxGif" */ = {
+		3CD0C27A16A1266B00B229A3 /* Build configuration list for PBXNativeTarget "GifBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3CD0C27B16A1266B00B229A3 /* Debug */,

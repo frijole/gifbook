@@ -9,12 +9,13 @@
 #import "ADSDataViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImage+animatedGIF.h"
-// #import "AnimatedGIF.h"
+#import "AnimatedGIF.h"
 #import "AFNetworking.h"
+#import <Social/Social.h>
 
 @interface ADSDataViewController ()
 
-@property (nonatomic) BOOL isTweeting;
+@property (nonatomic) BOOL isSharing;
 
 @end
 
@@ -22,8 +23,6 @@
 
 - (void)dealloc
 {
-    [_footerView release];
-    [_dataLabel release];
     [_imageView release];
     [_dataObject release];
     [super dealloc];
@@ -95,6 +94,8 @@
     if ( [self.footerView isHidden] ) {
         [self.footerView setAlpha:0.0f]; // just to be sure
         [self.footerView setHidden:NO]; // show it
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
         [UIView animateWithDuration:0.2f
                          animations:^{
                              [self.footerView setAlpha:1.0f]; // animate it in
@@ -106,6 +107,8 @@
 - (void)hideFooter
 {
     if ( [self.footerView isHidden] == NO ) {
+       
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
         [UIView animateWithDuration:0.2f
                          animations:^{
                              [self.footerView setAlpha:0.0f]; // animate it out
@@ -128,40 +131,35 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.dataLabel.text = [self.dataObject description];
+    self.labelItem.title = [self.dataObject description];
     
     if ( [self.dataObject isKindOfClass:[UIImage class]]) {
         [self.imageView setImage:self.dataObject];
     } else if ( [self.dataObject isKindOfClass:[NSURL class]] ) {
-       [self.imageView setImage:[UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f]];
-        self.dataLabel.text = [[[NSString stringWithFormat:@"%@",self.dataObject] componentsSeparatedByString:@"/"] lastObject];
+        // [self.imageView setImage:[UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f]];
+        [AnimatedGif setAnimationForGifAtUrl:self.dataObject forView:self.imageView];
         
+        self.labelItem.title = [[[NSString stringWithFormat:@"%@",self.dataObject] componentsSeparatedByString:@"/"] lastObject];
     }
-}
-
-- (void)tweet:(id)sender
-{
-    if ( !self.isTweeting ) {
-        // tweet it
-        [self setIsTweeting:YES];
-    }
-}
-
-
-- (void)setIsTweeting:(BOOL)isTweeting
-{
-    _isTweeting = isTweeting;
     
-    if ( self.tweetButton ) {
-        [self.tweetButton setEnabled:!isTweeting];
-        [UIView animateWithDuration:0.2f
-                         animations:^{
-                             [self.tweetButton isEnabled] ? [self.tweetButton setAlpha:1.0] : [self.tweetButton setAlpha:0.5f];
-                         }];
-        
-    }
-
 }
+
+- (void)share:(id)sender
+{
+    if ( !self.isSharing ) {
+        // share it
+        [self setIsSharing:YES];
+        
+        // UIImage *postImage = [UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f];
+        NSArray *activityItems = @[[NSString stringWithFormat:@"%@",self.dataObject]];
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+        [activityController setExcludedActivityTypes:[NSArray arrayWithObjects:UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypeSaveToCameraRoll, UIActivityTypeMail, nil]];
+        [self presentViewController:activityController  animated:YES completion:^{
+            [self setIsSharing:NO];
+        }];
+    }
+}
+
 
 
 @end
