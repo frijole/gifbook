@@ -22,7 +22,8 @@
 		3C636F9D16A2F9750079C315 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636F9216A2F9750079C315 /* AFURLConnectionOperation.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3C636F9E16A2F9750079C315 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636F9416A2F9750079C315 /* AFXMLRequestOperation.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3C636F9F16A2F9750079C315 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636F9616A2F9750079C315 /* UIImageView+AFNetworking.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		3C636FA216A3079A0079C315 /* AnimatedGif.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636FA116A3079A0079C315 /* AnimatedGif.m */; };
+		3C636FA516A30BD70079C315 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA416A30BD70079C315 /* MobileCoreServices.framework */; };
+		3C636FA716A30BEA0079C315 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */; };
 		3CCAC98016A1FDAD004B1C10 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */; };
 		3CD0C25216A1266B00B229A3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD0C25116A1266B00B229A3 /* UIKit.framework */; };
 		3CD0C25416A1266B00B229A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD0C25316A1266B00B229A3 /* Foundation.framework */; };
@@ -68,6 +69,8 @@
 		3C636F9616A2F9750079C315 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
 		3C636FA016A3079A0079C315 /* AnimatedGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedGif.h; path = submodules/iOS_AnimatedGIF/Classes/AnimatedGif.h; sourceTree = "<group>"; };
 		3C636FA116A3079A0079C315 /* AnimatedGif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimatedGif.m; path = submodules/iOS_AnimatedGIF/Classes/AnimatedGif.m; sourceTree = "<group>"; };
+		3C636FA416A30BD70079C315 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		3CD0C24D16A1266B00B229A3 /* MaxGif.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaxGif.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD0C25116A1266B00B229A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -103,6 +106,8 @@
 				3CD0C25616A1266B00B229A3 /* CoreGraphics.framework in Frameworks */,
 				3CCAC98016A1FDAD004B1C10 /* ImageIO.framework in Frameworks */,
 				3C636F0F16A213050079C315 /* QuartzCore.framework in Frameworks */,
+				3C636FA516A30BD70079C315 /* MobileCoreServices.framework in Frameworks */,
+				3C636FA716A30BEA0079C315 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +186,8 @@
 				3CD0C25516A1266B00B229A3 /* CoreGraphics.framework */,
 				3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */,
 				3C636F0D16A212FA0079C315 /* QuartzCore.framework */,
+				3C636FA416A30BD70079C315 /* MobileCoreServices.framework */,
+				3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -325,7 +332,6 @@
 				3C636F9D16A2F9750079C315 /* AFURLConnectionOperation.m in Sources */,
 				3C636F9E16A2F9750079C315 /* AFXMLRequestOperation.m in Sources */,
 				3C636F9F16A2F9750079C315 /* UIImageView+AFNetworking.m in Sources */,
-				3C636FA216A3079A0079C315 /* AnimatedGif.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

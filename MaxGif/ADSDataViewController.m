@@ -9,10 +9,12 @@
 #import "ADSDataViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UIImage+animatedGIF.h"
-#import "AnimatedGIF.h"
+// #import "AnimatedGIF.h"
 #import "AFNetworking.h"
 
 @interface ADSDataViewController ()
+
+@property (nonatomic) BOOL isTweeting;
 
 @end
 
@@ -36,13 +38,13 @@
     
     UITapGestureRecognizer *tmpDoubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTapped)];
     [tmpDoubleTapRecognizer setNumberOfTapsRequired:2];
-    [self.view addGestureRecognizer:tmpDoubleTapRecognizer];
+    [self.imageView addGestureRecognizer:tmpDoubleTapRecognizer];
     [tmpDoubleTapRecognizer release];
 
     UITapGestureRecognizer *tmpTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
     [tmpTapRecognizer setNumberOfTapsRequired:1];
     [tmpTapRecognizer requireGestureRecognizerToFail:tmpDoubleTapRecognizer];
-    [self.view addGestureRecognizer:tmpTapRecognizer];
+    [self.imageView addGestureRecognizer:tmpTapRecognizer];
     [tmpTapRecognizer release];
 }
 
@@ -131,28 +133,35 @@
     if ( [self.dataObject isKindOfClass:[UIImage class]]) {
         [self.imageView setImage:self.dataObject];
     } else if ( [self.dataObject isKindOfClass:[NSURL class]] ) {
-
-        // animation!
-        UIImageView *tmpAnimatedGIF = [AnimatedGif getAnimationForGifAtUrl:self.dataObject];
-
-        // copy over properties
-        [tmpAnimatedGIF setFrame:self.imageView.frame];
-        [tmpAnimatedGIF setContentMode:self.imageView.contentMode];
-        for ( NSLayoutConstraint *tmpConstraint in self.imageView.constraints ) {
-            [tmpAnimatedGIF addConstraint:tmpConstraint];
-        }
+       [self.imageView setImage:[UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f]];
+        self.dataLabel.text = [[[NSString stringWithFormat:@"%@",self.dataObject] componentsSeparatedByString:@"/"] lastObject];
         
-        // add it
-        [self.view addSubview:tmpAnimatedGIF];
-
-        // get rid of the old imageview
-        [self.imageView removeFromSuperview];
-        self.imageView = nil;
-        
-        // replace the property
-        [self setImageView:tmpAnimatedGIF];
-    
     }
 }
+
+- (void)tweet:(id)sender
+{
+    if ( !self.isTweeting ) {
+        // tweet it
+        [self setIsTweeting:YES];
+    }
+}
+
+
+- (void)setIsTweeting:(BOOL)isTweeting
+{
+    _isTweeting = isTweeting;
+    
+    if ( self.tweetButton ) {
+        [self.tweetButton setEnabled:!isTweeting];
+        [UIView animateWithDuration:0.2f
+                         animations:^{
+                             [self.tweetButton isEnabled] ? [self.tweetButton setAlpha:1.0] : [self.tweetButton setAlpha:0.5f];
+                         }];
+        
+    }
+
+}
+
 
 @end

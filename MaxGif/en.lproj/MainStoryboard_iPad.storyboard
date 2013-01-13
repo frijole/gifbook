@@ -44,6 +44,9 @@
                                         <state key="highlighted">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="tweet:" destination="5" eventType="touchUpInside" id="2Yo-Oz-bJ7"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="14">
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
@@ -80,6 +83,7 @@
                         <outlet property="dataLabel" destination="14" id="15"/>
                         <outlet property="footerView" destination="C0i-Kz-h7l" id="RIW-L1-1Sr"/>
                         <outlet property="imageView" destination="13" id="3hf-Le-LY5"/>
+                        <outlet property="tweetButton" destination="fmb-Tm-PWi" id="Gkg-Lk-OiV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6" sceneMemberID="firstResponder"/>

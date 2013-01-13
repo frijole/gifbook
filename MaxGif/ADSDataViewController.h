@@ -12,7 +12,10 @@
 
 @property (strong, nonatomic) IBOutlet UIView *footerView;
 @property (strong, nonatomic) IBOutlet UILabel *dataLabel;
+@property (strong, nonatomic) IBOutlet UIButton *tweetButton;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) id dataObject;
+
+- (IBAction)tweet:(id)sender;
 
 @end
