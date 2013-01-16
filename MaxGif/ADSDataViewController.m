@@ -120,6 +120,8 @@
         [self.footerView setAlpha:0.0f]; // just to be sure
         [self.footerView setHidden:NO]; // show it
         
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFooter) object:nil];
+        
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
         [UIView animateWithDuration:0.2f
                          animations:^{
@@ -210,10 +212,18 @@
         // share it
         [self setIsSharing:YES];
         
+        // ditch the toolbar and status bar
+        [self hideFooter];
+        
         // UIImage *postImage = [UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f];
-        NSArray *activityItems = @[[NSString stringWithFormat:@"%@",self.dataObject]];
+        NSArray *activityItems = @[[NSString stringWithFormat:@"%@ via @gifbookapp",self.dataObject]];
         UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
-        [activityController setExcludedActivityTypes:[NSArray arrayWithObjects:UIActivityTypePrint, UIActivityTypeAssignToContact, UIActivityTypeCopyToPasteboard, UIActivityTypeSaveToCameraRoll, UIActivityTypeMail, nil]];
+        [activityController setExcludedActivityTypes:[NSArray arrayWithObjects:UIActivityTypePrint, // print a gif? lulz.
+                                                      UIActivityTypeAssignToContact, // no animation
+                                                      UIActivityTypeCopyToPasteboard, // doesn't copy animation
+                                                      UIActivityTypeSaveToCameraRoll, // saves static version
+                                                      UIActivityTypeMail, // attachments don't animate
+                                                      nil]];
         [self presentViewController:activityController  animated:YES completion:^{
             [self setIsSharing:NO];
         }];

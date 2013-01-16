@@ -43,21 +43,30 @@
         
         NSMutableArray *tmpPageData = [NSMutableArray array];
 
-        for ( NSString *gifFile in [NSArray arrayWithObjects:@"wallet-blam.gif",@"head-bounce.gif",@"cat-run.gif",nil] ) {
-            // for ( NSString *gifFile in [NSArray arrayWithObjects:@"head-bounce.gif",nil] ) {
-
-            NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:gifFile];
-            NSURL *tmpGIFUrl = [NSURL fileURLWithPath:path isDirectory:NO];
-            // UIImage *tmpGIF = [UIImage animatedImageWithAnimatedGIFURL:tmpGIFUrl duration:5.0f];
-            if ( tmpGIFUrl ) {
-                [tmpPageData addObject:tmpGIFUrl];
-                // [tmpPageData addObject:tmpGIFUrl];
-                // [tmpPageData addObject:tmpGIFUrl];
-            } else {
-                NSLog(@"error loading %@",tmpGIFUrl);
+        if ( 0 ) {
+            for ( NSString *gifFile in [NSArray arrayWithObjects:@"wallet-blam.gif",@"head-bounce.gif",@"cat-run.gif",nil] ) {
+                NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:gifFile];
+                NSURL *tmpGIFUrl = [NSURL fileURLWithPath:path isDirectory:NO];
+                if ( tmpGIFUrl ) {
+                    [tmpPageData addObject:tmpGIFUrl];
+                }
+            }
+        } else {
+            for ( NSString *gifAddress in [NSArray arrayWithObjects:@"http://25.media.tumblr.com/65fb793b66ac2c5b57236a78ccfb4437/tumblr_mgp9jgo1FF1qa2d04o1_500.gif",
+                                           @"http://25.media.tumblr.com/564890ce29aaa87f2e8bae45fe5c3d2f/tumblr_mgnwf9ld0B1qfg786o1_500.gif",
+                                           @"http://25.media.tumblr.com/4d6bfe7484da35cf9dd235d60109fe47/tumblr_mg6ld5tbaG1qehntzo1_500.gif",
+                                           @"http://25.media.tumblr.com/0a9f27187f486be9d24a4760b89ac03a/tumblr_mgn52pl4hI1qg39ewo1_500.gif",
+                                           @"http://24.media.tumblr.com/tumblr_m7dbzmGd4n1qzqdulo1_500.gif",
+                                           @"http://24.media.tumblr.com/1e56a4ab8fda12c8e396fe02a850939a/tumblr_mg9x5pQUlH1qd4q8ao1_500.gif",
+                                           nil] ) {
+                NSURL *tmpGIFUrl = [NSURL URLWithString:gifAddress];
+                if ( tmpGIFUrl ) {
+                    [tmpPageData addObject:tmpGIFUrl];
+                }
             }
         }
         
+    
         _pageData = [[NSArray arrayWithArray:tmpPageData] retain];
         
     }
