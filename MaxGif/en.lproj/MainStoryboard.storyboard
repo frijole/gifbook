@@ -28,20 +28,36 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="13" customClass="UIImageView">
-                                <color key="backgroundColor" cocoaTouchSystemColor="viewFlipsideBackgroundColor"/>
+                                <color key="backgroundColor" red="1" green="0.1764705882352941" blue="0.19215686274509802" alpha="0.0" colorSpace="calibratedRGB"/>
                             </view>
+                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="sfU-yL-p2g">
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="to5-QI-woa"/>
+                                    <barButtonItem style="plain" systemItem="action" id="QGs-YW-HWk">
+                                        <connections>
+                                            <action selector="share:" destination="5" id="wZl-AM-vZT"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="xiI-6r-a33"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="sfU-yL-p2g" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="5Gu-9f-ioh"/>
                             <constraint firstItem="13" firstAttribute="bottom" secondItem="12" secondAttribute="bottom" type="default" id="CkG-HQ-iV6"/>
+                            <constraint firstItem="sfU-yL-p2g" firstAttribute="leading" secondItem="12" secondAttribute="leading" type="default" id="Ddw-sy-hgH"/>
                             <constraint firstItem="13" firstAttribute="leading" secondItem="12" secondAttribute="leading" type="default" id="GOc-wO-Tba"/>
+                            <constraint firstItem="sfU-yL-p2g" firstAttribute="bottom" secondItem="12" secondAttribute="bottom" type="default" id="UFR-AH-Rlx"/>
                             <constraint firstItem="13" firstAttribute="top" secondItem="12" secondAttribute="top" type="default" id="oYO-HV-1M3"/>
                             <constraint firstItem="13" firstAttribute="trailing" secondItem="12" secondAttribute="trailing" type="default" id="thL-9d-UBA"/>
                         </constraints>
                         <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackTranslucent"/>
                     </view>
                     <connections>
+                        <outlet property="footerView" destination="sfU-yL-p2g" id="pDB-mD-Mf3"/>
                         <outlet property="imageView" destination="13" id="3hf-Le-LY5"/>
+                        <outlet property="shareItem" destination="QGs-YW-HWk" id="rJT-7R-5v5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6" sceneMemberID="firstResponder"/>
@@ -49,6 +65,24 @@
             <point key="canvasLocation" x="896" y="-243"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="ADSDataViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADSDataViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="share:"/>
+                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="shareItem" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="ADSRootViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADSRootViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

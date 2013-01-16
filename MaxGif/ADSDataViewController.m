@@ -17,6 +17,9 @@
 
 @property (nonatomic) BOOL isSharing;
 
+@property (nonatomic, retain) UIActivityIndicatorView *spinner;
+@property (nonatomic, retain) UIImageView *logoImageView;
+
 @end
 
 @implementation ADSDataViewController
@@ -46,6 +49,27 @@
     [self.imageView addGestureRecognizer:tmpTapRecognizer];
     [tmpTapRecognizer release];
 
+    CGRect tmpLogoFrame = self.view.bounds;
+    tmpLogoFrame.origin.y += 20;
+    tmpLogoFrame.size.height -= 120;
+    
+    _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    [_spinner startAnimating];
+    CGRect tmpFrame = CGRectMake(0, self.view.frame.size.height-100, self.view.frame.size.width, 40);
+    [_spinner setFrame:tmpFrame];
+    [_spinner setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin)];
+    [self.view insertSubview:_spinner atIndex:0];
+    
+    _logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
+    [_logoImageView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth)];
+    [_logoImageView setBackgroundColor:[UIColor clearColor]];
+    [_logoImageView setAlpha:0.5f];
+    [_logoImageView setFrame:tmpLogoFrame];
+    [_logoImageView setContentMode:UIViewContentModeCenter];
+    [self.view insertSubview:_logoImageView atIndex:0];
+    [_logoImageView release];
+    
+    [self.view setBackgroundColor:[UIColor blackColor]];
 }
 
 - (void)tapped
@@ -101,6 +125,11 @@
                          animations:^{
                              [self.footerView setAlpha:1.0f]; // animate it in
                          }
+         completion:^(BOOL finished) {
+             if ( finished ) {
+                 [self performSelector:@selector(hideFooter) withObject:nil afterDelay:2.5f];
+             }
+         }
          ];
     }
 }
@@ -132,6 +161,28 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    [self.spinner startAnimating];
+    [self.logoImageView setHidden:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.imageView startAnimating];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadedGif:) name:@"imageViewLoadedAnimatedGIF" object:nil];
+    
+    [self setup];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.imageView stopAnimating];
+}
+
+
+- (void)setup
+{
     self.labelItem.title = [self.dataObject description];
     
     if ( [self.dataObject isKindOfClass:[UIImage class]]) {
@@ -142,17 +193,14 @@
         
         self.labelItem.title = [[[NSString stringWithFormat:@"%@",self.dataObject] componentsSeparatedByString:@"/"] lastObject];
     }
+}
+
+- (void)loadedGif:(id)sender
+{
+    NSLog(@"loadedGif: %@",sender);
     
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [self.imageView startAnimating];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [self.imageView stopAnimating];
+    [_spinner stopAnimating];
+    [_logoImageView setHidden:YES];
 }
 
 

@@ -25,6 +25,8 @@
 		3C636FA716A30BEA0079C315 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */; };
 		3C636FA916A30E0E0079C315 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA816A30E0E0079C315 /* Social.framework */; };
 		3C636FB016A3239E0079C315 /* AnimatedGif.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636FAF16A3239E0079C315 /* AnimatedGif.m */; };
+		3CBBE56D16A64A560016626F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CBBE56B16A64A560016626F /* logo.png */; };
+		3CBBE56E16A64A560016626F /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CBBE56C16A64A560016626F /* logo@2x.png */; };
 		3CCAC98016A1FDAD004B1C10 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */; };
 		3CD0C25216A1266B00B229A3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD0C25116A1266B00B229A3 /* UIKit.framework */; };
 		3CD0C25416A1266B00B229A3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD0C25316A1266B00B229A3 /* Foundation.framework */; };
@@ -74,6 +76,8 @@
 		3C636FA816A30E0E0079C315 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		3C636FAE16A3239E0079C315 /* AnimatedGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedGif.h; path = "submodules/Animated-GIF-iPhone/Classes/AnimatedGif.h"; sourceTree = "<group>"; };
 		3C636FAF16A3239E0079C315 /* AnimatedGif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimatedGif.m; path = "submodules/Animated-GIF-iPhone/Classes/AnimatedGif.m"; sourceTree = "<group>"; };
+		3CBBE56B16A64A560016626F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		3CBBE56C16A64A560016626F /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		3CD0C24D16A1266B00B229A3 /* GifBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GifBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD0C25116A1266B00B229A3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -234,6 +238,8 @@
 				3CD0C26316A1266B00B229A3 /* Default.png */,
 				3CD0C26516A1266B00B229A3 /* Default@2x.png */,
 				3CD0C26716A1266B00B229A3 /* Default-568h@2x.png */,
+				3CBBE56B16A64A560016626F /* logo.png */,
+				3CBBE56C16A64A560016626F /* logo@2x.png */,
 				3C636F0C16A20BEB0079C315 /* sample images */,
 			);
 			name = "Supporting Files";
@@ -320,6 +326,8 @@
 				3C636F0A16A20BE70079C315 /* wallet-blam.gif in Resources */,
 				3C636F0B16A20BE70079C315 /* cat-run.gif in Resources */,
 				3C636F1116A2182B0079C315 /* Icon@2x.png in Resources */,
+				3CBBE56D16A64A560016626F /* logo.png in Resources */,
+				3CBBE56E16A64A560016626F /* logo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

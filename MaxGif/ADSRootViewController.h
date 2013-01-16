@@ -11,5 +11,6 @@
 @interface ADSRootViewController : UIViewController <UIPageViewControllerDelegate>
 
 @property (strong, nonatomic) UIPageViewController *pageViewController;
+@property (strong, nonatomic) UIView *footerView;
 
 @end
