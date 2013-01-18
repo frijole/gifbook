@@ -197,12 +197,16 @@
     }
 }
 
-- (void)loadedGif:(id)sender
+- (void)loadedGif:(NSNotification *)sender
 {
     NSLog(@"loadedGif: %@",sender);
     
-    [_spinner stopAnimating];
-    [_logoImageView setHidden:YES];
+    if ( [sender object] == self.imageView ) {
+        [_spinner stopAnimating];
+        [_logoImageView setHidden:YES];
+    } else {
+        NSLog(@"loadedGif received from %p but current image view is %p",sender.object,self.imageView);
+    }
 }
 
 

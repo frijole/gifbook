@@ -36,7 +36,7 @@
     self.pageViewController = [[[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil] autorelease];
     self.pageViewController.delegate = self;
 
-    ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:1 storyboard:self.storyboard];
+    ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:[_modelController numberOfPages]-3 storyboard:self.storyboard];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationOrientationHorizontal animated:NO completion:NULL];
 
@@ -56,6 +56,15 @@
 
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     // self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
+    NSLog(@"page view gesture recognizers: %@",self.pageViewController.gestureRecognizers);
+    for ( UIGestureRecognizer *tmpGR in self.pageViewController.gestureRecognizers) {
+        if ( [tmpGR isKindOfClass:[UITapGestureRecognizer class]] ) {
+            NSLog(@"found tap recognizer");
+            [tmpGR setEnabled:NO];
+        } else {
+            NSLog(@"found another recognizer");
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -75,20 +84,6 @@
 }
 
 #pragma mark - UIPageViewController delegate methods
-
-//- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
-//{
-//    
-//    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"transitionStarting" object:nil]];
-//}
-//
-//
-//- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
-//{
-//    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"transitionDone" object:nil]];
-//}
-
-
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
     // always one page on the top

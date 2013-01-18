@@ -12,6 +12,8 @@
 
 @interface ADSModelController : NSObject <UIPageViewControllerDataSource>
 
+- (NSUInteger)numberOfPages;
+
 - (ADSDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(ADSDataViewController *)viewController;
 

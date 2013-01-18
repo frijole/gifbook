@@ -7,10 +7,11 @@
 //
 
 #import "ADSModelController.h"
-
 #import "ADSDataViewController.h"
 
 #import "UIImage+animatedGIF.h"
+
+#import "AFNetworking.h"
 
 /*
  A controller object that manages a simple model -- a collection of month names.
@@ -22,8 +23,14 @@
  */
 
 @interface ADSModelController()
-@property (readonly, strong, nonatomic) NSArray *pageData;
+{
+    BOOL _fetching;
+}
+
+@property (strong, nonatomic) NSMutableArray *pageData;
+
 @end
+
 
 @implementation ADSModelController
 
@@ -38,38 +45,25 @@
     self = [super init];
     if (self) {
         // Create the data model.
-        // NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
-        // _pageData = [[dateFormatter monthSymbols] copy];
+        self.pageData = [NSMutableArray array];
         
-        NSMutableArray *tmpPageData = [NSMutableArray array];
-
-        if ( 0 ) {
-            for ( NSString *gifFile in [NSArray arrayWithObjects:@"wallet-blam.gif",@"head-bounce.gif",@"cat-run.gif",nil] ) {
-                NSString *path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:gifFile];
-                NSURL *tmpGIFUrl = [NSURL fileURLWithPath:path isDirectory:NO];
-                if ( tmpGIFUrl ) {
-                    [tmpPageData addObject:tmpGIFUrl];
-                }
-            }
-        } else {
-            for ( NSString *gifAddress in [NSArray arrayWithObjects:@"http://25.media.tumblr.com/65fb793b66ac2c5b57236a78ccfb4437/tumblr_mgp9jgo1FF1qa2d04o1_500.gif",
-                                           @"http://25.media.tumblr.com/564890ce29aaa87f2e8bae45fe5c3d2f/tumblr_mgnwf9ld0B1qfg786o1_500.gif",
-                                           @"http://25.media.tumblr.com/4d6bfe7484da35cf9dd235d60109fe47/tumblr_mg6ld5tbaG1qehntzo1_500.gif",
-                                           @"http://25.media.tumblr.com/0a9f27187f486be9d24a4760b89ac03a/tumblr_mgn52pl4hI1qg39ewo1_500.gif",
-                                           @"http://24.media.tumblr.com/tumblr_m7dbzmGd4n1qzqdulo1_500.gif",
-                                           @"http://24.media.tumblr.com/1e56a4ab8fda12c8e396fe02a850939a/tumblr_mg9x5pQUlH1qd4q8ao1_500.gif",
-                                           nil] ) {
-                NSURL *tmpGIFUrl = [NSURL URLWithString:gifAddress];
-                if ( tmpGIFUrl ) {
-                    [tmpPageData addObject:tmpGIFUrl];
-                }
+        for ( NSString *gifAddress in [NSArray arrayWithObjects:@"http://25.media.tumblr.com/65fb793b66ac2c5b57236a78ccfb4437/tumblr_mgp9jgo1FF1qa2d04o1_500.gif",
+                                       @"http://25.media.tumblr.com/564890ce29aaa87f2e8bae45fe5c3d2f/tumblr_mgnwf9ld0B1qfg786o1_500.gif",
+                                       @"http://25.media.tumblr.com/4d6bfe7484da35cf9dd235d60109fe47/tumblr_mg6ld5tbaG1qehntzo1_500.gif",
+                                       @"http://25.media.tumblr.com/0a9f27187f486be9d24a4760b89ac03a/tumblr_mgn52pl4hI1qg39ewo1_500.gif",
+                                       @"http://24.media.tumblr.com/tumblr_m7dbzmGd4n1qzqdulo1_500.gif",
+                                       @"http://24.media.tumblr.com/1e56a4ab8fda12c8e396fe02a850939a/tumblr_mg9x5pQUlH1qd4q8ao1_500.gif",
+                                       nil] ) {
+            NSURL *tmpGIFUrl = [NSURL URLWithString:gifAddress];
+            if ( tmpGIFUrl ) {
+                [self.pageData addObject:tmpGIFUrl];
             }
         }
         
-    
-        _pageData = [[NSArray arrayWithArray:tmpPageData] retain];
-        
     }
+    
+    [self getAGif];
+    
     return self;
 }
 
@@ -78,6 +72,10 @@
     // Return the data view controller for the given index.
     if (([self.pageData count] == 0) || (index >= [self.pageData count])) {
         return nil;
+    }
+    
+    if ( index > self.pageData.count-3 ) {
+        [self getAGif];
     }
     
     // Create a new view controller and pass suitable data.
@@ -91,6 +89,11 @@
      // Return the index of the given data view controller.
      // For simplicity, this implementation uses a static array of model objects and the view controller stores the model object; you can therefore use the model object to identify the index.
     return [self.pageData indexOfObject:viewController.dataObject];
+}
+
+- (NSUInteger)numberOfPages
+{
+    return self.pageData.count;
 }
 
 #pragma mark - Page View Controller Data Source
@@ -118,6 +121,67 @@
         return nil;
     }
     return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+}
+
+#pragma mark - Web Updating
+- (void)getAGif
+{
+    if ( !_fetching ) {
+        _fetching = YES;
+        
+        NSString *tmpURLString = @"http://iank.org/picbot/pic?type=gif";
+        AFJSONRequestOperation *tmpRequest = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:tmpURLString]]
+                                                                                             success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                                                                                 // parse 'it
+                                                                                                 [JSON valueForKey:@"pic"] ? [self addGif:[JSON valueForKey:@"pic"]] : nil;
+                                                                                                 // clear the block
+                                                                                                 _fetching = NO;
+                                                                                                 
+                                                                                             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                                                                                 //
+                                                                                                 NSLog(@"failed to download new url");
+                                                                                             }];
+        [tmpRequest start];
+    }
+}
+
+- (void)getGifs:(NSInteger)inQuantity
+{
+    if ( !_fetching ) {
+        _fetching = YES;
+        
+        NSString *tmpURLString = [NSString stringWithFormat:@"http://iank.org/picbot/pic?n=%dtype=gif",inQuantity];
+        AFJSONRequestOperation *tmpRequest = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:tmpURLString]]
+                                                                                             success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                                                                                                 // parse 'em
+                                                                                                 for ( NSString *tmpGIFAddress in [JSON valueForKey:@"pics"] ) {
+                                                                                                     [self addGif:tmpGIFAddress];
+                                                                                                 }
+                                                                                                 // clear the block
+                                                                                                 _fetching = NO;
+
+                                                                                             } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                                                                                                 //
+                                                                                                 NSLog(@"failed to download new url");
+                                                                                             }];
+        [tmpRequest start];
+    }
+}
+
+- (void)addGif:(NSString *)inString
+{
+    if ( ![inString isKindOfClass:[NSString class]] ) {
+        NSLog(@"git string is not a string (%@)",NSStringFromClass([inString class]));
+    } else if ( [inString rangeOfString:@"https"].location != NSNotFound ) {
+        NSLog(@"gif contained https, discarding");
+        [self getAGif];
+    } else if ( [inString rangeOfString:@"http"].location != NSNotFound &&
+               [inString rangeOfString:@"gif"].location != NSNotFound ) {
+        [self.pageData addObject:[NSURL URLWithString:inString]];
+        NSLog(@"added new url: %@",inString);
+    } else {
+        NSLog(@"no valid url found in downloaded url: %@",inString);
+    }
 }
 
 @end
