@@ -9,4 +9,4 @@
 	url = https://github.com/scspijker/iOS_AnimatedGif.git
 [submodule "submodules/Animated-GIF-iPhone"]
 	path = submodules/Animated-GIF-iPhone
-	url = https://github.com/arturogutierrez/Animated-GIF-iPhone.git
+	url = https://github.com/frijole/Animated-GIF-iPhone.git
