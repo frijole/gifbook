@@ -8,7 +8,6 @@
 
 #import "ADSDataViewController.h"
 #import <QuartzCore/QuartzCore.h>
-#import "UIImage+animatedGIF.h"
 #import "AnimatedGIF.h"
 #import "AFNetworking.h"
 #import <Social/Social.h>

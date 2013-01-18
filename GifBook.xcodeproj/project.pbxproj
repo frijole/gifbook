@@ -41,7 +41,6 @@
 		3CD0C26E16A1266B00B229A3 /* ADSDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C26D16A1266B00B229A3 /* ADSDataViewController.m */; };
 		3CD0C27116A1266B00B229A3 /* ADSModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C27016A1266B00B229A3 /* ADSModelController.m */; };
 		3CD0C27716A1266B00B229A3 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CD0C27516A1266B00B229A3 /* MainStoryboard.storyboard */; };
-		3CD0C27F16A1271C00B229A3 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C27E16A1271C00B229A3 /* UIImage+animatedGIF.m */; };
 		3CEC1B3716A98EFA001A366C /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3516A98EFA001A366C /* star.png */; };
 		3CEC1B3816A98EFA001A366C /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3616A98EFA001A366C /* star@2x.png */; };
 		3CEC1B3C16A98F7A001A366C /* star-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3A16A98F7A001A366C /* star-off@2x.png */; };
@@ -73,8 +72,6 @@
 		3C636F9416A2F9750079C315 /* AFXMLRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFXMLRequestOperation.m; path = AFNetworking/AFXMLRequestOperation.m; sourceTree = "<group>"; };
 		3C636F9516A2F9750079C315 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+AFNetworking.h"; path = "AFNetworking/UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
 		3C636F9616A2F9750079C315 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
-		3C636FA016A3079A0079C315 /* AnimatedGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedGif.h; path = submodules/iOS_AnimatedGIF/Classes/AnimatedGif.h; sourceTree = "<group>"; };
-		3C636FA116A3079A0079C315 /* AnimatedGif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimatedGif.m; path = submodules/iOS_AnimatedGIF/Classes/AnimatedGif.m; sourceTree = "<group>"; };
 		3C636FA416A30BD70079C315 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3C636FA816A30E0E0079C315 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -103,8 +100,6 @@
 		3CD0C26F16A1266B00B229A3 /* ADSModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADSModelController.h; sourceTree = "<group>"; };
 		3CD0C27016A1266B00B229A3 /* ADSModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADSModelController.m; sourceTree = "<group>"; };
 		3CD0C27616A1266B00B229A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		3CD0C27D16A1271C00B229A3 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "submodules/animatedgif/uiimage-from-animated-gif/UIImage+animatedGIF.h"; sourceTree = "<group>"; };
-		3CD0C27E16A1271C00B229A3 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "submodules/animatedgif/uiimage-from-animated-gif/UIImage+animatedGIF.m"; sourceTree = "<group>"; };
 		3CEC1B3516A98EFA001A366C /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		3CEC1B3616A98EFA001A366C /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		3CEC1B3A16A98F7A001A366C /* star-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-off@2x.png"; sourceTree = "<group>"; };
@@ -165,15 +160,6 @@
 			);
 			name = AFNetworking;
 			path = submodules/AFNetworking;
-			sourceTree = "<group>";
-		};
-		3C636FA316A3079E0079C315 /* iOS_AnimatdGIF */ = {
-			isa = PBXGroup;
-			children = (
-				3C636FA016A3079A0079C315 /* AnimatedGif.h */,
-				3C636FA116A3079A0079C315 /* AnimatedGif.m */,
-			);
-			name = iOS_AnimatdGIF;
 			sourceTree = "<group>";
 		};
 		3C636FB116A323A20079C315 /* Animatd-GIF-IPhone */ = {
@@ -257,22 +243,11 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3CD0C28016A1272000B229A3 /* animatedGIF */ = {
-			isa = PBXGroup;
-			children = (
-				3CD0C27D16A1271C00B229A3 /* UIImage+animatedGIF.h */,
-				3CD0C27E16A1271C00B229A3 /* UIImage+animatedGIF.m */,
-			);
-			name = animatedGIF;
-			sourceTree = "<group>";
-		};
 		3CD0C28116A1272700B229A3 /* Submodules */ = {
 			isa = PBXGroup;
 			children = (
 				3C636FB116A323A20079C315 /* Animatd-GIF-IPhone */,
-				3C636FA316A3079E0079C315 /* iOS_AnimatdGIF */,
 				3C636F1216A2F94F0079C315 /* AFNetworking */,
-				3CD0C28016A1272000B229A3 /* animatedGIF */,
 			);
 			name = Submodules;
 			sourceTree = "<group>";
@@ -359,7 +334,6 @@
 				3CD0C26B16A1266B00B229A3 /* ADSRootViewController.m in Sources */,
 				3CD0C26E16A1266B00B229A3 /* ADSDataViewController.m in Sources */,
 				3CD0C27116A1266B00B229A3 /* ADSModelController.m in Sources */,
-				3CD0C27F16A1271C00B229A3 /* UIImage+animatedGIF.m in Sources */,
 				3C636F9716A2F9750079C315 /* AFHTTPClient.m in Sources */,
 				3C636F9816A2F9750079C315 /* AFHTTPRequestOperation.m in Sources */,
 				3C636F9916A2F9750079C315 /* AFImageRequestOperation.m in Sources */,
