@@ -86,7 +86,7 @@
 #pragma mark - UIPageViewController delegate methods
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
-    // always one page on the top
+    // always one page on the left
     return UIPageViewControllerSpineLocationMin;
 }
 
