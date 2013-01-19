@@ -171,6 +171,12 @@
     [self.logoImageView setHidden:NO];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // avoid scheduled calls firing while we're going away
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.imageView startAnimating];
@@ -203,27 +209,32 @@
 
 - (void)gifLoaded:(NSNotification *)sender
 {
-    NSLog(@"gifLoaded: %@",sender);
+//    NSLog(@"gifLoaded: %@",sender);
     
     if ( [sender object] == self.imageView ) {
         [_spinner stopAnimating];
         [_logoImageView setHidden:YES];
     } else {
-        NSLog(@"loadedGif received from %p but current image view is %p",sender.object,self.imageView);
+//        NSLog(@"loadedGif received from %p but current image view is %p",sender.object,self.imageView);
     }
 }
 
 - (void)gifFailed:(NSNotification *)sender
 {
-    NSLog(@"gifFailed: %@",sender);
 
-    // go to the next page
-    [self performSelector:@selector(nextPage) withObject:nil afterDelay:0.2f];
+    if ( [sender object] == self.imageView ) {
+//        NSLog(@"this view controller's gif failed: %@",sender);
+        // go to the next page
+        [self performSelector:@selector(nextPage) withObject:nil afterDelay:0.5f];
+    } else {
+//        NSLog(@"another view controller's gif failed: %@",sender);
+    }
 }
 
 - (void)nextPage
 {
     // go to the next page somehow
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"pageViewAdvanceRequest" object:self];
 }
 
 - (void)share:(id)sender

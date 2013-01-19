@@ -53,15 +53,17 @@
 
     // Add the page view controller's gesture recognizers to the book view controller's view so that the gestures are started more easily.
     // self.view.gestureRecognizers = self.pageViewController.gestureRecognizers;
-    NSLog(@"page view gesture recognizers: %@",self.pageViewController.gestureRecognizers);
     for ( UIGestureRecognizer *tmpGR in self.pageViewController.gestureRecognizers) {
         if ( [tmpGR isKindOfClass:[UITapGestureRecognizer class]] ) {
-            NSLog(@"found tap recognizer");
+//            NSLog(@"found tap recognizer");
             [tmpGR setEnabled:NO];
         } else {
-            NSLog(@"found another recognizer");
+//            NSLog(@"found another recognizer");
         }
     }
+    
+    // listen for a request to advance a page
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(advancePage:) name:@"pageViewAdvanceRequest" object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,6 +87,22 @@
 {
     // always one page on the left
     return UIPageViewControllerSpineLocationMin;
+}
+
+#pragma mark - Page View Advance Request Notification
+- (void)advancePage:(NSNotification *)inNotification
+{
+        NSLog(@"root view controller received request to advance page: %@",inNotification);
+    if ( [inNotification.object isKindOfClass:[ADSDataViewController class]] ) {
+
+        int currentPage = [self.modelController indexOfViewController:inNotification.object];
+        ADSDataViewController *nextViewController = [self.modelController viewControllerAtIndex:currentPage+1 storyboard:self.storyboard];
+        NSArray *viewControllers = @[nextViewController];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+    
+    } else {
+        NSLog(@"request to advance page originated from unknown page controller class, disregarding");
+    }
 }
 
 @end

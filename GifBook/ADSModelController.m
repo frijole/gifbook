@@ -169,16 +169,16 @@
 - (void)addGif:(NSString *)inString
 {
     if ( ![inString isKindOfClass:[NSString class]] ) {
-        NSLog(@"git string is not a string (%@)",NSStringFromClass([inString class]));
+//        NSLog(@"git string is not a string (%@)",NSStringFromClass([inString class]));
     } else if ( [inString rangeOfString:@"https"].location != NSNotFound ) {
-        NSLog(@"gif contained https, discarding");
+//        NSLog(@"gif contained https, discarding");
         [self getAGif];
     } else if ( [inString rangeOfString:@"http"].location != NSNotFound &&
                [inString rangeOfString:@"gif"].location != NSNotFound ) {
         [self.pageData addObject:[NSURL URLWithString:inString]];
-        NSLog(@"added new url: %@",inString);
+//        NSLog(@"added new url: %@",inString);
     } else {
-        NSLog(@"no valid url found in downloaded url: %@",inString);
+//        NSLog(@"no valid url found in downloaded url: %@",inString);
     }
 }
 
