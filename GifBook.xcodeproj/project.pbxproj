@@ -41,6 +41,10 @@
 		3CD0C26E16A1266B00B229A3 /* ADSDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C26D16A1266B00B229A3 /* ADSDataViewController.m */; };
 		3CD0C27116A1266B00B229A3 /* ADSModelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD0C27016A1266B00B229A3 /* ADSModelController.m */; };
 		3CD0C27716A1266B00B229A3 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CD0C27516A1266B00B229A3 /* MainStoryboard.storyboard */; };
+		3CD83B3B16AB2F7000750E4E /* track@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CD83B3716AB2F7000750E4E /* track@2x.png */; };
+		3CD83B3C16AB2F7000750E4E /* bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CD83B3816AB2F7000750E4E /* bar@2x.png */; };
+		3CD83B3D16AB2F7000750E4E /* track.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CD83B3916AB2F7000750E4E /* track.png */; };
+		3CD83B3E16AB2F7000750E4E /* bar.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CD83B3A16AB2F7000750E4E /* bar.png */; };
 		3CEC1B3716A98EFA001A366C /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3516A98EFA001A366C /* star.png */; };
 		3CEC1B3816A98EFA001A366C /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3616A98EFA001A366C /* star@2x.png */; };
 		3CEC1B3C16A98F7A001A366C /* star-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3A16A98F7A001A366C /* star-off@2x.png */; };
@@ -102,6 +106,10 @@
 		3CD0C26F16A1266B00B229A3 /* ADSModelController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADSModelController.h; sourceTree = "<group>"; };
 		3CD0C27016A1266B00B229A3 /* ADSModelController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADSModelController.m; sourceTree = "<group>"; };
 		3CD0C27616A1266B00B229A3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		3CD83B3716AB2F7000750E4E /* track@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "track@2x.png"; sourceTree = "<group>"; };
+		3CD83B3816AB2F7000750E4E /* bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar@2x.png"; sourceTree = "<group>"; };
+		3CD83B3916AB2F7000750E4E /* track.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = track.png; sourceTree = "<group>"; };
+		3CD83B3A16AB2F7000750E4E /* bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bar.png; sourceTree = "<group>"; };
 		3CEC1B3516A98EFA001A366C /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		3CEC1B3616A98EFA001A366C /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		3CEC1B3A16A98F7A001A366C /* star-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-off@2x.png"; sourceTree = "<group>"; };
@@ -222,7 +230,6 @@
 				3CD0C27516A1266B00B229A3 /* MainStoryboard.storyboard */,
 				3CD0C25816A1266B00B229A3 /* Supporting Files */,
 			);
-			name = GifBook;
 			path = GifBook;
 			sourceTree = "<group>";
 		};
@@ -233,6 +240,10 @@
 				3CD0C25A16A1266B00B229A3 /* InfoPlist.strings */,
 				3CD0C25D16A1266B00B229A3 /* main.m */,
 				3CD0C25F16A1266B00B229A3 /* GifBook-Prefix.pch */,
+				3CD83B3716AB2F7000750E4E /* track@2x.png */,
+				3CD83B3816AB2F7000750E4E /* bar@2x.png */,
+				3CD83B3916AB2F7000750E4E /* track.png */,
+				3CD83B3A16AB2F7000750E4E /* bar.png */,
 				3CEC1B3516A98EFA001A366C /* star.png */,
 				3CEC1B3616A98EFA001A366C /* star@2x.png */,
 				3CEC1B3A16A98F7A001A366C /* star-off@2x.png */,
@@ -328,6 +339,10 @@
 				3CEC1B3D16A98F7A001A366C /* star-off.png in Resources */,
 				3CEC1BC916AB1DDD001A366C /* x@2x.png in Resources */,
 				3CEC1BCA16AB1DDD001A366C /* x.png in Resources */,
+				3CD83B3B16AB2F7000750E4E /* track@2x.png in Resources */,
+				3CD83B3C16AB2F7000750E4E /* bar@2x.png in Resources */,
+				3CD83B3D16AB2F7000750E4E /* track.png in Resources */,
+				3CD83B3E16AB2F7000750E4E /* bar.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

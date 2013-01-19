@@ -72,24 +72,6 @@
     <resources>
         <image name="star-off.png" width="26" height="26"/>
     </resources>
-    <classes>
-        <class className="ADSDataViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADSDataViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="share:"/>
-                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="labelItem" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="shareItem" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="ADSRootViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADSRootViewController.h"/>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

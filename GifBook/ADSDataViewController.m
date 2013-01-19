@@ -19,6 +19,7 @@
 @property (nonatomic) BOOL isSharing;
 
 @property (nonatomic, retain) UIActivityIndicatorView *spinner;
+@property (nonatomic, retain) UIProgressView *progressBar;
 @property (nonatomic, retain) UIImageView *logoImageView;
 
 @end
@@ -55,11 +56,22 @@
     tmpLogoFrame.size.height -= 120;
     
     _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    [_spinner startAnimating];
     CGRect tmpFrame = CGRectMake(0, self.view.frame.size.height-100, self.view.frame.size.width, 40);
     [_spinner setFrame:tmpFrame];
     [_spinner setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin)];
+    [_spinner setHidden:YES];
     [self.view insertSubview:_spinner atIndex:0];
+    
+    self.progressBar = [[UIProgressView alloc] initWithFrame:CGRectMake((self.view.frame.size.width-100)/2, self.view.frame.size.height-90, 100, 23)];
+    [self.progressBar setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin)];
+    // customize appearance
+    UIImage *track = [[UIImage imageNamed:@"track.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(1, 12, 1, 12)];
+    [self.progressBar setTrackImage:track];
+    UIImage *progress = [[UIImage imageNamed:@"bar.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(1, 12, 1, 12)];
+    [self.progressBar setProgressImage:progress];
+    [self.progressBar setProgress:0.1f animated:NO];
+    // put a view on it
+    [self.view addSubview:self.progressBar];
     
     _logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
     [_logoImageView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth)];
@@ -167,8 +179,10 @@
     
     [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
 
-    [self.spinner startAnimating];
+    [self.spinner setHidden:YES];
     [self.logoImageView setHidden:NO];
+    [self.progressBar setHidden:NO];
+    [self.progressBar setProgress:0.1f animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -181,6 +195,8 @@
 {
     [self.imageView startAnimating];
 
+    [self.progressBar setProgress:1.0f animated:YES];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gifLoaded:) name:@"imageViewAnimatedGIFLoaded" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gifFailed:) name:@"imageViewAnimatedGIFLoadingFailed" object:nil];
     
@@ -195,11 +211,7 @@
 
 - (void)setup
 {
-    self.labelItem.title = [self.dataObject description];
-    
-    if ( [self.dataObject isKindOfClass:[UIImage class]]) {
-        [self.imageView setImage:self.dataObject];
-    } else if ( [self.dataObject isKindOfClass:[NSURL class]] ) {
+    if ( [self.dataObject isKindOfClass:[NSURL class]] ) {
         // [self.imageView setImage:[UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f]];
         [AnimatedGif setAnimationForGifAtUrl:self.dataObject forView:self.imageView];
         
@@ -214,6 +226,7 @@
     if ( [sender object] == self.imageView ) {
         [_spinner stopAnimating];
         [_logoImageView setHidden:YES];
+        [_progressBar setHidden:YES];
     } else {
 //        NSLog(@"loadedGif received from %p but current image view is %p",sender.object,self.imageView);
     }
