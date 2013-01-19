@@ -33,7 +33,7 @@
     self.pageViewController = [[[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil] autorelease];
     self.pageViewController.delegate = self;
 
-    ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:[_modelController numberOfPages]-3 storyboard:self.storyboard];
+    ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationOrientationHorizontal animated:NO completion:NULL];
 
@@ -97,9 +97,12 @@
 
         int currentPage = [self.modelController indexOfViewController:inNotification.object];
         ADSDataViewController *nextViewController = [self.modelController viewControllerAtIndex:currentPage+1 storyboard:self.storyboard];
+        if ( nextViewController ) {
         NSArray *viewControllers = @[nextViewController];
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
-    
+        } else {
+            NSLog(@"no more view controllers");
+        }
     } else {
         NSLog(@"request to advance page originated from unknown page controller class, disregarding");
     }
