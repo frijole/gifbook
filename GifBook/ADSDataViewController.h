@@ -1,6 +1,6 @@
 //
 //  ADSDataViewController.h
-//  MaxGif
+//  GifBook
 //
 //  Created by Ian Meyer on 1/12/13.
 //  Copyright (c) 2013 Adelie Software. All rights reserved.

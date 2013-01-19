@@ -1,5 +1,5 @@
 //
-// Prefix header for all source files of the 'MaxGif' target in the 'MaxGif' project
+// Prefix header for all source files of the 'GifBook' target in the 'GifBook' project
 //
 
 #import <Availability.h>

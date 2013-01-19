@@ -1,6 +1,6 @@
 //
 //  ADSDataViewController.m
-//  MaxGif
+//  GifBook
 //
 //  Created by Ian Meyer on 1/12/13.
 //  Copyright (c) 2013 Adelie Software. All rights reserved.
@@ -11,6 +11,8 @@
 #import "AnimatedGIF.h"
 #import "AFNetworking.h"
 #import <Social/Social.h>
+#import "ADSRootViewController.h"
+#import "ADSModelController.h"
 
 @interface ADSDataViewController ()
 
@@ -163,6 +165,8 @@
 {
     [super viewWillAppear:animated];
     
+    [self.imageView setContentMode:UIViewContentModeScaleAspectFill];
+
     [self.spinner startAnimating];
     [self.logoImageView setHidden:NO];
 }
@@ -171,7 +175,8 @@
 {
     [self.imageView startAnimating];
 
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadedGif:) name:@"imageViewLoadedAnimatedGIF" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gifLoaded:) name:@"imageViewAnimatedGIFLoaded" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gifFailed:) name:@"imageViewAnimatedGIFLoadingFailed" object:nil];
     
     [self setup];
 }
@@ -196,9 +201,9 @@
     }
 }
 
-- (void)loadedGif:(NSNotification *)sender
+- (void)gifLoaded:(NSNotification *)sender
 {
-    NSLog(@"loadedGif: %@",sender);
+    NSLog(@"gifLoaded: %@",sender);
     
     if ( [sender object] == self.imageView ) {
         [_spinner stopAnimating];
@@ -208,6 +213,18 @@
     }
 }
 
+- (void)gifFailed:(NSNotification *)sender
+{
+    NSLog(@"gifFailed: %@",sender);
+
+    // go to the next page
+    [self performSelector:@selector(nextPage) withObject:nil afterDelay:0.2f];
+}
+
+- (void)nextPage
+{
+    // go to the next page somehow
+}
 
 - (void)share:(id)sender
 {

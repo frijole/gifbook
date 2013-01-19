@@ -45,6 +45,8 @@
 		3CEC1B3816A98EFA001A366C /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3616A98EFA001A366C /* star@2x.png */; };
 		3CEC1B3C16A98F7A001A366C /* star-off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3A16A98F7A001A366C /* star-off@2x.png */; };
 		3CEC1B3D16A98F7A001A366C /* star-off.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1B3B16A98F7A001A366C /* star-off.png */; };
+		3CEC1BC916AB1DDD001A366C /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1BC716AB1DDD001A366C /* x@2x.png */; };
+		3CEC1BCA16AB1DDD001A366C /* x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CEC1BC816AB1DDD001A366C /* x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +106,8 @@
 		3CEC1B3616A98EFA001A366C /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
 		3CEC1B3A16A98F7A001A366C /* star-off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-off@2x.png"; sourceTree = "<group>"; };
 		3CEC1B3B16A98F7A001A366C /* star-off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-off.png"; sourceTree = "<group>"; };
+		3CEC1BC716AB1DDD001A366C /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@2x.png"; sourceTree = "<group>"; };
+		3CEC1BC816AB1DDD001A366C /* x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = x.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +178,7 @@
 		3CD0C24216A1266B00B229A3 = {
 			isa = PBXGroup;
 			children = (
-				3CD0C25716A1266B00B229A3 /* MaxGif */,
+				3CD0C25716A1266B00B229A3 /* GifBook */,
 				3CD0C28116A1272700B229A3 /* Submodules */,
 				3CD0C25016A1266B00B229A3 /* Frameworks */,
 				3CD0C24E16A1266B00B229A3 /* Products */,
@@ -204,7 +208,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3CD0C25716A1266B00B229A3 /* MaxGif */ = {
+		3CD0C25716A1266B00B229A3 /* GifBook */ = {
 			isa = PBXGroup;
 			children = (
 				3CD0C26016A1266B00B229A3 /* ADSAppDelegate.h */,
@@ -218,7 +222,8 @@
 				3CD0C27516A1266B00B229A3 /* MainStoryboard.storyboard */,
 				3CD0C25816A1266B00B229A3 /* Supporting Files */,
 			);
-			path = MaxGif;
+			name = GifBook;
+			path = GifBook;
 			sourceTree = "<group>";
 		};
 		3CD0C25816A1266B00B229A3 /* Supporting Files */ = {
@@ -238,6 +243,8 @@
 				3CD0C26716A1266B00B229A3 /* Default-568h@2x.png */,
 				3CBBE56B16A64A560016626F /* logo.png */,
 				3CBBE56C16A64A560016626F /* logo@2x.png */,
+				3CEC1BC716AB1DDD001A366C /* x@2x.png */,
+				3CEC1BC816AB1DDD001A366C /* x.png */,
 				3C636F0C16A20BEB0079C315 /* sample images */,
 			);
 			name = "Supporting Files";
@@ -268,7 +275,7 @@
 			dependencies = (
 			);
 			name = GifBook;
-			productName = MaxGif;
+			productName = GifBook;
 			productReference = 3CD0C24D16A1266B00B229A3 /* GifBook.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -319,6 +326,8 @@
 				3CEC1B3816A98EFA001A366C /* star@2x.png in Resources */,
 				3CEC1B3C16A98F7A001A366C /* star-off@2x.png in Resources */,
 				3CEC1B3D16A98F7A001A366C /* star-off.png in Resources */,
+				3CEC1BC916AB1DDD001A366C /* x@2x.png in Resources */,
+				3CEC1BCA16AB1DDD001A366C /* x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,8 +433,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MaxGif/GifBook-Prefix.pch";
-				INFOPLIST_FILE = "MaxGif/GifBook-Info.plist";
+				GCC_PREFIX_HEADER = "GifBook/GifBook-Prefix.pch";
+				INFOPLIST_FILE = "GifBook/GifBook-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = GifBook;
 				WRAPPER_EXTENSION = app;
@@ -436,8 +445,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MaxGif/GifBook-Prefix.pch";
-				INFOPLIST_FILE = "MaxGif/GifBook-Info.plist";
+				GCC_PREFIX_HEADER = "GifBook/GifBook-Prefix.pch";
+				INFOPLIST_FILE = "GifBook/GifBook-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = GifBook;
 				WRAPPER_EXTENSION = app;
