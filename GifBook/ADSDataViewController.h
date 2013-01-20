@@ -11,13 +11,15 @@
 
 @interface ADSDataViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UINavigationBar *navbar;
 @property (strong, nonatomic) IBOutlet UIView *footerView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *labelItem;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *shareItem;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) id dataObject;
 
 @property (strong, nonatomic) ADSModelController *modelController;
+
+- (IBAction)rewind:(id)sender;
+- (IBAction)fastforward:(id)sender;
 
 - (IBAction)share:(id)sender;
 - (IBAction)trash:(id)sender;

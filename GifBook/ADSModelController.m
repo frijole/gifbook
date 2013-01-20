@@ -54,8 +54,11 @@
             [self.pageData addObjectsFromArray:tmpAddressesFromDisk];
         }
 
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        
         // we tried to read from disk but didn't get anything, load the default
-        if ( self.pageData.count == 0 ) {
+        // ...or if the "resetURLs" preferece is set to yes
+        if ( self.pageData.count == 0 || [[prefs objectForKey:@"resetURLs"] boolValue] ) {
         
             for ( NSString *gifAddress in [NSArray arrayWithObjects:@"http://25.media.tumblr.com/0a9f27187f486be9d24a4760b89ac03a/tumblr_mgn52pl4hI1qg39ewo1_500.gif",
                                            @"http://25.media.tumblr.com/4d6bfe7484da35cf9dd235d60109fe47/tumblr_mg6ld5tbaG1qehntzo1_500.gif",
@@ -66,6 +69,12 @@
                 if ( tmpGIFUrl ) {
                     [self.pageData addObject:tmpGIFUrl];
                 }
+            }
+            
+            // un-set preference if necessary
+            if ( [prefs valueForKey:@"resetURLs"] ) {
+                [prefs removeObjectForKey:@"resetURLs"];
+                [prefs synchronize];
             }
             
         }
@@ -187,12 +196,25 @@
         [self getAGif];
     } else if ( [inString rangeOfString:@"http"].location != NSNotFound &&
                [inString rangeOfString:@"gif"].location != NSNotFound ) {
-        [self.pageData addObject:[NSURL URLWithString:inString]];
+        NSURL *tmpNewURL = [NSURL URLWithString:inString];
+        BOOL tmpShouldAdd = YES;
+        
+        for ( NSURL *tmpURL in self.pageData ) {
+            if ( [tmpURL.absoluteString isEqualToString:tmpNewURL.absoluteString] ) {
+                tmpShouldAdd = NO;
+            }
+        }
+        
+        if ( tmpShouldAdd ) {
+            [self.pageData addObject:tmpNewURL];
+        } else {
+            // NSLog(@"duplicate url: %@", tmpNewURL);
+        }
         
         [self saveData];
-//        NSLog(@"added new url: %@",inString);
+        // NSLog(@"added new url: %@",inString);
     } else {
-//        NSLog(@"no valid url found in downloaded url: %@",inString);
+        // NSLog(@"no valid url found in downloaded url: %@",inString);
     }
 }
 
@@ -228,9 +250,9 @@
     NSString *tmpAddressFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"gifs"];
     // NSArray *tmpAddressesFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpAddressFilePath];
     if ( [NSKeyedArchiver archiveRootObject:self.pageData toFile:tmpAddressFilePath] ) {
-        NSLog(@"saved updated list");
+        // NSLog(@"saved updated list");
     } else {
-        NSLog(@"failed to save updated list");
+        NSLog(@"error saving updated list");
     }
 
 }

@@ -77,6 +77,7 @@
     [self.progressBar setProgress:0.1f animated:NO];
     // put a view on it
     [self.view addSubview:self.progressBar];
+    [self.progressBar release];
     
     _logoImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo.png"]];
     [_logoImageView setAutoresizingMask:(UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth)];
@@ -87,6 +88,32 @@
     [self.view insertSubview:_logoImageView atIndex:0];
     [_logoImageView release];
     
+    if ( self.navbar.items.count > 0 ) {
+        UINavigationItem *tmpNavItem = (UINavigationItem *)[self.navbar.items objectAtIndex:0];
+        
+        [tmpNavItem setTitle:[NSString stringWithFormat:@"%d of %d+",[self.modelController indexOfViewController:self]+1,[self.modelController numberOfPages]]];
+        
+        UIButton *tmpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [tmpButton setFrame:CGRectMake(0, 0, 30, 30)];
+        [tmpButton setImage:[UIImage imageNamed:@"rw.png"] forState:UIControlStateNormal];
+        [tmpButton.imageView setContentMode:UIViewContentModeCenter];
+        [tmpButton setShowsTouchWhenHighlighted:YES];
+        [tmpButton addTarget:self action:@selector(rewind:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *tmpBBI = [[UIBarButtonItem alloc] initWithCustomView:tmpButton];
+        [tmpNavItem setLeftBarButtonItem:tmpBBI];
+        [tmpBBI release];
+
+        tmpButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [tmpButton setFrame:CGRectMake(0, 0, 30, 30)];
+        [tmpButton setImage:[UIImage imageNamed:@"ff.png"] forState:UIControlStateNormal];
+        [tmpButton.imageView setContentMode:UIViewContentModeCenter];
+        [tmpButton setShowsTouchWhenHighlighted:YES];
+        [tmpButton addTarget:self action:@selector(fastforward:) forControlEvents:UIControlEventTouchUpInside];
+        tmpBBI = [[UIBarButtonItem alloc] initWithCustomView:tmpButton];
+        [tmpNavItem setRightBarButtonItem:tmpBBI];
+        [tmpBBI release];
+  }
+
     [self.view setBackgroundColor:[UIColor blackColor]];
 }
 
@@ -135,19 +162,24 @@
 - (void)showFooter
 {
     if ( self.footerView && [self.footerView isHidden] ) {
-        [self.footerView setAlpha:0.0f]; // just to be sure
-        [self.footerView setHidden:NO]; // show it
         
+        [self.footerView setAlpha:0.0f];    // just to be sure
+        [self.footerView setHidden:NO];     // show it
+
+        [self.navbar setAlpha:0.0f];
+        [self.navbar setHidden:NO];
+
         [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(hideFooter) object:nil];
         
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-        [UIView animateWithDuration:0.2f
+        [UIView animateWithDuration:0.25f
                          animations:^{
                              [self.footerView setAlpha:1.0f]; // animate it in
+                             [self.navbar setAlpha:1.0f];
                          }
          completion:^(BOOL finished) {
              if ( finished ) {
-                 [self performSelector:@selector(hideFooter) withObject:nil afterDelay:2.5f];
+                 [self performSelector:@selector(hideFooter) withObject:nil afterDelay:5.0f];
              }
          }
          ];
@@ -159,13 +191,15 @@
     if ( self.footerView && [self.footerView isHidden] == NO ) {
        
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-        [UIView animateWithDuration:0.2f
+        [UIView animateWithDuration:0.25f
                          animations:^{
-                             [self.footerView setAlpha:0.0f]; // animate it out
+                             [self.footerView setAlpha:0.0f];   // animate it out
+                             [self.navbar setAlpha:0.0f];      // animate it out
                          }
                          completion:^(BOOL finished) {
                              if ( finished ) {
-                                 [self.footerView setHidden:YES]; // then hide it
+                                 [self.footerView setHidden:YES];   // then hide it
+                                 [self.navbar setHidden:YES];      // then hide it
                              }
                          }
          ];
@@ -192,6 +226,8 @@
 {
     // avoid scheduled calls firing while we're going away
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
+
+    [self hideFooter];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -229,7 +265,7 @@
         
         // Create a request.
         NSURLRequest *tmpRequest = [NSURLRequest requestWithURL:self.dataObject
-                                                  cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                  cachePolicy:NSURLRequestReturnCacheDataElseLoad
                                                 timeoutInterval:INT_MAX];
         // create the connection with the request
         // and start loading the data
@@ -271,6 +307,17 @@
         [self.spinner stopAnimating];
         [self.spinner setHidden:YES];
         
+        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.spinner.frame.origin.x-75, CGRectGetMaxY(self.spinner.frame)+5, self.spinner.frame.size.width+150, 45)];
+        [tmpLabel setAutoresizingMask:(UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin)];
+        [tmpLabel setBackgroundColor:[UIColor clearColor]];
+        [tmpLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
+        [tmpLabel setTextAlignment:NSTextAlignmentCenter];
+        [tmpLabel setFont:[UIFont boldSystemFontOfSize:18.0f]];
+        [tmpLabel setNumberOfLines:2];
+        [tmpLabel setText:@"there was a problem\nwith the download or GIF"];
+        [self.view addSubview:tmpLabel];
+        [tmpLabel release];
+        
         UIImageView *tmpError = [[UIImageView alloc] initWithFrame:self.spinner.frame];
         [tmpError setContentMode:UIViewContentModeCenter];
         [tmpError setImage:[UIImage imageNamed:@"x.png"]];
@@ -281,7 +328,8 @@
         // [self performSelector:@selector(nextPage) withObject:nil afterDelay:0.75f];
 
         // delete this image (will advance to the next page for us)
-        [self trash:nil];
+        // [self trash:nil];
+        [self performSelector:@selector(trash:) withObject:nil afterDelay:0.25f]; // short delay before moving on
 
     } else {
 //        NSLog(@"another view controller's gif failed: %@",sender);
@@ -292,6 +340,16 @@
 {
     // go to the next page somehow
     [[NSNotificationCenter defaultCenter] postNotificationName:@"pageViewAdvanceRequest" object:self];
+}
+
+- (IBAction)rewind:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"pageViewRewindRequest" object:self];
+}
+
+- (IBAction)fastforward:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"pageViewFastforwardRequest" object:self];
 }
 
 - (void)share:(id)sender
@@ -305,7 +363,7 @@
         
         // UIImage *postImage = [UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f];
         NSArray *activityItems = @[[NSString stringWithFormat:@"%@ via @gifbookapp",self.dataObject]];
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+        UIActivityViewController *activityController = [[[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil] autorelease];
         [activityController setExcludedActivityTypes:[NSArray arrayWithObjects:UIActivityTypePrint, // print a gif? lulz.
                                                       UIActivityTypeAssignToContact, // no animation
                                                       UIActivityTypeCopyToPasteboard, // doesn't copy animation
@@ -385,7 +443,7 @@
         [self.view addSubview:tmpError];
         [tmpError release];
 
-        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.spinner.frame.origin.x-75, self.spinner.frame.origin.y-45, self.spinner.frame.size.width+150, 30)];
+        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.spinner.frame.origin.x-75, CGRectGetMaxY(self.spinner.frame)+5, self.spinner.frame.size.width+150, 45)];
         [tmpLabel setBackgroundColor:[UIColor clearColor]];
         [tmpLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
         [tmpLabel setTextAlignment:NSTextAlignmentCenter];

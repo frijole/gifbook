@@ -35,6 +35,10 @@
 
     NSUserDefaults *tmpPrefs = [NSUserDefaults standardUserDefaults];
     int tmpPrevLastPage = [tmpPrefs integerForKey:@"pageNumber"];
+
+    // make sure its not too high
+    if ( tmpPrevLastPage > self.modelController.numberOfPages-1 )
+        tmpPrevLastPage = self.modelController.numberOfPages-1;
     
     ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:tmpPrevLastPage storyboard:self.storyboard];
     NSArray *viewControllers = @[startingViewController];
@@ -67,6 +71,9 @@
     
     // listen for a request to advance a page
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(advancePage:) name:@"pageViewAdvanceRequest" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rewindPages:) name:@"pageViewRewindRequest" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fastforwardPages:) name:@"pageViewFastforwardRequest" object:nil];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -132,4 +139,47 @@
     }
 }
 
+- (void)rewindPages:(NSNotification *)inNotification
+{
+    //  NSLog(@"root view controller received request to advance page: %@",inNotification);
+    if ( [inNotification.object isKindOfClass:[ADSDataViewController class]] ) {
+        
+        int currentPage = [self.modelController indexOfViewController:inNotification.object];
+        if ( currentPage == 0 ) {
+            NSLog(@"at first view controller, disregarding request to rewind");
+        } else {
+            ADSDataViewController *nextViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
+            if ( nextViewController ) {
+                NSArray *viewControllers = @[nextViewController];
+                [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:NULL];
+            } else {
+                NSLog(@"error creating first view controller, bailing out of rewind request");
+            }
+        }
+    } else {
+            NSLog(@"request to rewind pages originated from unknown page controller class, disregarding request to advance");
+    }
+}
+
+- (void)fastforwardPages:(NSNotification *)inNotification
+{
+    //  NSLog(@"root view controller received request to advance page: %@",inNotification);
+    if ( [inNotification.object isKindOfClass:[ADSDataViewController class]] ) {
+        
+        int currentPage = [self.modelController indexOfViewController:inNotification.object];
+        if ( currentPage == self.modelController.numberOfPages ) {
+            NSLog(@"at last view controller, disregarding request to fast forward");
+        } else {
+            ADSDataViewController *nextViewController = [self.modelController viewControllerAtIndex:self.modelController.numberOfPages-1 storyboard:self.storyboard];
+            if ( nextViewController ) {
+                NSArray *viewControllers = @[nextViewController];
+                [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+            } else {
+                NSLog(@"error creating last view controller, bailing out of fast forward request");
+            }
+        }
+    } else {
+        NSLog(@"request to fast forward pages originated from unknown page controller class, disregarding request to advance");
+    }
+}
 @end
