@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ADSModelController.h"
 
 @interface ADSDataViewController : UIViewController
 
@@ -16,6 +17,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) id dataObject;
 
+@property (strong, nonatomic) ADSModelController *modelController;
+
 - (IBAction)share:(id)sender;
+- (IBAction)trash:(id)sender;
 
 @end

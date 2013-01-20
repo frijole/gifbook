@@ -45,15 +45,29 @@
         // Create the data model.
         self.pageData = [NSMutableArray array];
         
-        for ( NSString *gifAddress in [NSArray arrayWithObjects:@"http://25.media.tumblr.com/0a9f27187f486be9d24a4760b89ac03a/tumblr_mgn52pl4hI1qg39ewo1_500.gif",
-                                       @"http://25.media.tumblr.com/4d6bfe7484da35cf9dd235d60109fe47/tumblr_mg6ld5tbaG1qehntzo1_500.gif",
-                                       @"http://24.media.tumblr.com/tumblr_m7dbzmGd4n1qzqdulo1_500.gif",
-                                       @"http://24.media.tumblr.com/1e56a4ab8fda12c8e396fe02a850939a/tumblr_mg9x5pQUlH1qd4q8ao1_500.gif",
-                                       nil] ) {
-            NSURL *tmpGIFUrl = [NSURL URLWithString:gifAddress];
-            if ( tmpGIFUrl ) {
-                [self.pageData addObject:tmpGIFUrl];
+        NSArray *cacheDirectories = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        NSString *tmpAddressFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"gifs"];
+        NSArray *tmpAddressesFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpAddressFilePath];
+
+        if ( tmpAddressesFromDisk && tmpAddressesFromDisk.count > 0 ) {
+            NSLog(@"importing %d urls from disk",tmpAddressesFromDisk.count);
+            [self.pageData addObjectsFromArray:tmpAddressesFromDisk];
+        }
+
+        // we tried to read from disk but didn't get anything, load the default
+        if ( self.pageData.count == 0 ) {
+        
+            for ( NSString *gifAddress in [NSArray arrayWithObjects:@"http://25.media.tumblr.com/0a9f27187f486be9d24a4760b89ac03a/tumblr_mgn52pl4hI1qg39ewo1_500.gif",
+                                           @"http://25.media.tumblr.com/4d6bfe7484da35cf9dd235d60109fe47/tumblr_mg6ld5tbaG1qehntzo1_500.gif",
+                                           @"http://24.media.tumblr.com/tumblr_m7dbzmGd4n1qzqdulo1_500.gif",
+                                           @"http://24.media.tumblr.com/1e56a4ab8fda12c8e396fe02a850939a/tumblr_mg9x5pQUlH1qd4q8ao1_500.gif",
+                                           nil] ) {
+                NSURL *tmpGIFUrl = [NSURL URLWithString:gifAddress];
+                if ( tmpGIFUrl ) {
+                    [self.pageData addObject:tmpGIFUrl];
+                }
             }
+            
         }
         
     }
@@ -71,12 +85,13 @@
     }
     
     if ( index > self.pageData.count-3 ) {
-        [self getAGif];
+        [self getGifs:25];
     }
     
     // Create a new view controller and pass suitable data.
     ADSDataViewController *dataViewController = [storyboard instantiateViewControllerWithIdentifier:@"ADSDataViewController"];
     dataViewController.dataObject = self.pageData[index];
+    dataViewController.modelController = self;
     return dataViewController;
 }
 
@@ -132,7 +147,6 @@
                                                                                                  [JSON valueForKey:@"pic"] ? [self addGif:[JSON valueForKey:@"pic"]] : nil;
                                                                                                  // clear the block
                                                                                                  _fetching = NO;
-                                                                                                 
                                                                                              } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
                                                                                                  //
                                                                                                  NSLog(@"failed to download new url");
@@ -146,7 +160,7 @@
     if ( !_fetching ) {
         _fetching = YES;
         
-        NSString *tmpURLString = [NSString stringWithFormat:@"http://iank.org/picbot/pic?n=%dtype=gif",inQuantity];
+        NSString *tmpURLString = [NSString stringWithFormat:@"http://iank.org/picbot/pic?n=%d&type=gif",inQuantity];
         AFJSONRequestOperation *tmpRequest = [AFJSONRequestOperation JSONRequestOperationWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:tmpURLString]]
                                                                                              success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
                                                                                                  // parse 'em
@@ -167,17 +181,58 @@
 - (void)addGif:(NSString *)inString
 {
     if ( ![inString isKindOfClass:[NSString class]] ) {
-//        NSLog(@"git string is not a string (%@)",NSStringFromClass([inString class]));
+        // NSLog(@"git string is not a string (%@)",NSStringFromClass([inString class]));
     } else if ( [inString rangeOfString:@"https"].location != NSNotFound ) {
-//        NSLog(@"gif contained https, discarding");
+        // NSLog(@"gif contained https, discarding");
         [self getAGif];
     } else if ( [inString rangeOfString:@"http"].location != NSNotFound &&
                [inString rangeOfString:@"gif"].location != NSNotFound ) {
         [self.pageData addObject:[NSURL URLWithString:inString]];
+        
+        [self saveData];
 //        NSLog(@"added new url: %@",inString);
     } else {
 //        NSLog(@"no valid url found in downloaded url: %@",inString);
     }
+}
+
+- (BOOL)removeGif:(id)inGIF
+{
+    NSURL *tmpURLtoDelete = nil;
+
+    if ( [inGIF isKindOfClass:[NSString class]] )
+    {
+        // we have a string
+        tmpURLtoDelete = [NSURL URLWithString:inGIF];
+    } else if ( [inGIF isKindOfClass:[NSURL class]] ) {
+        // we have a URL
+        tmpURLtoDelete = inGIF;
+    }
+    
+    for ( NSURL *tmpURL in self.pageData ) {
+        if ( [tmpURL isEqual:tmpURLtoDelete] ) {
+            [self.pageData removeObject:tmpURL];
+            [self saveData];
+            return YES;
+        }
+    }
+
+    return NO; // it didn't.
+}
+
+- (void)saveData
+{
+    // save updated list
+    // save the update
+    NSArray *cacheDirectories = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    NSString *tmpAddressFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"gifs"];
+    // NSArray *tmpAddressesFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpAddressFilePath];
+    if ( [NSKeyedArchiver archiveRootObject:self.pageData toFile:tmpAddressFilePath] ) {
+        NSLog(@"saved updated list");
+    } else {
+        NSLog(@"failed to save updated list");
+    }
+
 }
 
 @end

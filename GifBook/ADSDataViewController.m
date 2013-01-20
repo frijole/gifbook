@@ -13,11 +13,16 @@
 #import <Social/Social.h>
 #import "ADSRootViewController.h"
 #import "ADSModelController.h"
+#import "Reachability.h"
 
-@interface ADSDataViewController ()
+@interface ADSDataViewController () <NSURLConnectionDelegate>
+{
+    float _downloadSize;
+    NSURLConnection *_urlConnection;
+    NSMutableData *_receivedData;
+}
 
 @property (nonatomic) BOOL isSharing;
-
 @property (nonatomic, retain) UIActivityIndicatorView *spinner;
 @property (nonatomic, retain) UIProgressView *progressBar;
 @property (nonatomic, retain) UIImageView *logoImageView;
@@ -181,8 +186,6 @@
 
     [self.spinner setHidden:YES];
     [self.logoImageView setHidden:NO];
-    [self.progressBar setHidden:NO];
-    [self.progressBar setProgress:0.1f animated:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -194,11 +197,11 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.imageView startAnimating];
-
-    [self.progressBar setProgress:1.0f animated:YES];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gifLoaded:) name:@"imageViewAnimatedGIFLoaded" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(gifFailed:) name:@"imageViewAnimatedGIFLoadingFailed" object:nil];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
     
     [self setup];
 }
@@ -206,16 +209,38 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
     [self.imageView stopAnimating];
+
+    // see if we hvae a pending download to cancel, and cancel it
+    if ( _urlConnection ) {
+        [_urlConnection cancel];
+    }
 }
 
 
 - (void)setup
 {
-    if ( [self.dataObject isKindOfClass:[NSURL class]] ) {
-        // [self.imageView setImage:[UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f]];
-        [AnimatedGif setAnimationForGifAtUrl:self.dataObject forView:self.imageView];
+    if ( [self.dataObject isKindOfClass:[NSURL class]] && !_urlConnection && self.imageView.animationImages.count == 0 ) {
+        // if we have a URL, and don't have a download or an animation... (this avoids redoing it when someone starts to turn the page, then stops.
         
-        self.labelItem.title = [[[NSString stringWithFormat:@"%@",self.dataObject] componentsSeparatedByString:@"/"] lastObject];
+        // self.labelItem.title = [[[NSString stringWithFormat:@"%@",self.dataObject] componentsSeparatedByString:@"/"] lastObject];
+        // [self.imageView setImage:[UIImage animatedImageWithAnimatedGIFURL:self.dataObject duration:2.0f]];
+        
+        // [AnimatedGif setAnimationForGifAtUrl:self.dataObject forView:self.imageView];
+        
+        // Create a request.
+        NSURLRequest *tmpRequest = [NSURLRequest requestWithURL:self.dataObject
+                                                  cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                timeoutInterval:INT_MAX];
+        // create the connection with the request
+        // and start loading the data
+        _urlConnection = [[NSURLConnection alloc] initWithRequest:tmpRequest delegate:self];
+        if ( _urlConnection ) {
+            // Create a NSMutableData to hold the received data.
+            // receivedData is an instance variable declared elsewhere.
+            _receivedData = [[NSMutableData data] retain];
+        } else {
+            // Inform the user that the connection failed.
+        }
     }
 }
 
@@ -227,6 +252,7 @@
         [_spinner stopAnimating];
         [_logoImageView setHidden:YES];
         [_progressBar setHidden:YES];
+        [_imageView setHidden:NO];
     } else {
 //        NSLog(@"loadedGif received from %p but current image view is %p",sender.object,self.imageView);
     }
@@ -237,8 +263,26 @@
 
     if ( [sender object] == self.imageView ) {
 //        NSLog(@"this view controller's gif failed: %@",sender);
+        
+        // present failure
+        [self.imageView setHidden:YES];
+        [self.logoImageView setHidden:NO];
+        [self.progressBar setHidden:YES];
+        [self.spinner stopAnimating];
+        [self.spinner setHidden:YES];
+        
+        UIImageView *tmpError = [[UIImageView alloc] initWithFrame:self.spinner.frame];
+        [tmpError setContentMode:UIViewContentModeCenter];
+        [tmpError setImage:[UIImage imageNamed:@"x.png"]];
+        [self.view addSubview:tmpError];
+        [tmpError release];
+        
         // go to the next page
-        [self performSelector:@selector(nextPage) withObject:nil afterDelay:0.5f];
+        // [self performSelector:@selector(nextPage) withObject:nil afterDelay:0.75f];
+
+        // delete this image (will advance to the next page for us)
+        [self trash:nil];
+
     } else {
 //        NSLog(@"another view controller's gif failed: %@",sender);
     }
@@ -274,6 +318,115 @@
     }
 }
 
+- (void)trash:(id)sender
+{
+    if ( self.modelController ) {
 
+        // request an advance first, while the mode vc can still get index of the current page via its dataobject
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"pageViewAdvanceRequest" object:self];
+
+        if ( [self.modelController removeGif:self.dataObject] ) {
+            // deleted
+            NSLog(@"deleted gif: %@", self.dataObject);
+        } else {
+            NSLog(@"failed to delete gif: %@", self.dataObject);
+        }
+    }
+}
+
+#pragma mark - NSURLConnectionDelegate
+- (void)connection: (NSURLConnection*)connection didReceiveResponse: (NSHTTPURLResponse*) response
+{
+    NSInteger tmpStatusCode_ = [response statusCode];
+    if (tmpStatusCode_ == 200) {
+        _downloadSize = [response expectedContentLength];
+    } if ( tmpStatusCode_ == 404 ) {
+        // make a fake notification
+        NSLog(@"Download failed: %@ %@", @"404", response.URL);
+        [self gifFailed:[NSNotification notificationWithName:@"gifFailed" object:self.imageView]];
+    }
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    // Append the new data to receivedData.
+    // receivedData is an instance variable declared elsewhere.
+    [_receivedData appendData:data];
+    
+    [self.progressBar setProgress:(_receivedData.length/_downloadSize) animated:YES];
+}
+
+- (void)connection:(NSURLConnection *)connection
+  didFailWithError:(NSError *)error
+{
+    // release the connection, and the data object
+    [connection release];
+    _urlConnection = nil;
+    
+    // receivedData is declared as a method instance elsewhere
+    [_receivedData release];
+    _receivedData = nil;
+    
+    // inform the user
+    NSLog(@"Download failed: %@ %@",
+          [error localizedDescription],
+          [[error userInfo] objectForKey:NSURLErrorFailingURLStringErrorKey]);
+    
+    if ( [error code] == NSURLErrorNotConnectedToInternet ) {
+        // offline
+        [self.imageView setHidden:YES];
+        [self.logoImageView setHidden:NO];
+        [self.progressBar setHidden:YES];
+        [self.spinner setHidden:YES];
+        
+        UIImageView *tmpError = [[UIImageView alloc] initWithFrame:self.spinner.frame];
+        [tmpError setContentMode:UIViewContentModeCenter];
+        [tmpError setImage:[UIImage imageNamed:@"x.png"]];
+        [self.view addSubview:tmpError];
+        [tmpError release];
+
+        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.spinner.frame.origin.x-75, self.spinner.frame.origin.y-45, self.spinner.frame.size.width+150, 30)];
+        [tmpLabel setBackgroundColor:[UIColor clearColor]];
+        [tmpLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
+        [tmpLabel setTextAlignment:NSTextAlignmentCenter];
+        [tmpLabel setFont:[UIFont boldSystemFontOfSize:18.0f]];
+        [tmpLabel setNumberOfLines:2];
+        [tmpLabel setText:@"offline"];
+        [self.view addSubview:tmpLabel];
+        [tmpLabel release];
+        
+    } else {
+        // make a fake notification
+        [self gifFailed:[NSNotification notificationWithName:@"gifFailed" object:self.imageView]];
+    }
+
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    // do something with the data
+    // receivedData is declared as a method instance elsewhere
+//    NSLog(@"Succeeded! Received %d bytes of data",[_receivedData length]);
+    
+    
+    
+    [self.progressBar setHidden:YES];
+    [self.spinner setHidden:NO];
+    [self.spinner startAnimating];
+    
+    if ( [AnimatedGif setAnimationForGifWithData:_receivedData forView:self.imageView] ) {
+//        NSLog(@"parsing gif...");
+    } else {
+        NSLog(@"failed to initiate parsing.");
+    }
+
+    // release the connection, and the data object
+    [connection release];
+    [_receivedData release];
+
+    // clear convenience pointer to released connection and data
+    _urlConnection = nil;
+    _receivedData = nil;
+}
 
 @end

@@ -25,6 +25,7 @@
 		3C636FA716A30BEA0079C315 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA616A30BEA0079C315 /* SystemConfiguration.framework */; };
 		3C636FA916A30E0E0079C315 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636FA816A30E0E0079C315 /* Social.framework */; };
 		3C636FB016A3239E0079C315 /* AnimatedGif.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636FAF16A3239E0079C315 /* AnimatedGif.m */; };
+		3C6BE41D16AC6DE6000FE50B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6BE41C16AC6DE6000FE50B /* Reachability.m */; };
 		3CBBE56D16A64A560016626F /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CBBE56B16A64A560016626F /* logo.png */; };
 		3CBBE56E16A64A560016626F /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CBBE56C16A64A560016626F /* logo@2x.png */; };
 		3CCAC98016A1FDAD004B1C10 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */; };
@@ -83,6 +84,8 @@
 		3C636FA816A30E0E0079C315 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		3C636FAE16A3239E0079C315 /* AnimatedGif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimatedGif.h; path = "submodules/Animated-GIF-iPhone/Classes/AnimatedGif.h"; sourceTree = "<group>"; };
 		3C636FAF16A3239E0079C315 /* AnimatedGif.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimatedGif.m; path = "submodules/Animated-GIF-iPhone/Classes/AnimatedGif.m"; sourceTree = "<group>"; };
+		3C6BE41B16AC6DE6000FE50B /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		3C6BE41C16AC6DE6000FE50B /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		3CBBE56B16A64A560016626F /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		3CBBE56C16A64A560016626F /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		3CCAC97D16A1FDA2004B1C10 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
@@ -183,6 +186,15 @@
 			name = "Animatd-GIF-IPhone";
 			sourceTree = "<group>";
 		};
+		3C6BE41A16AC6DE6000FE50B /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				3C6BE41B16AC6DE6000FE50B /* Reachability.h */,
+				3C6BE41C16AC6DE6000FE50B /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		3CD0C24216A1266B00B229A3 = {
 			isa = PBXGroup;
 			children = (
@@ -228,6 +240,7 @@
 				3CD0C26F16A1266B00B229A3 /* ADSModelController.h */,
 				3CD0C27016A1266B00B229A3 /* ADSModelController.m */,
 				3CD0C27516A1266B00B229A3 /* MainStoryboard.storyboard */,
+				3C6BE41A16AC6DE6000FE50B /* Reachability */,
 				3CD0C25816A1266B00B229A3 /* Supporting Files */,
 			);
 			path = GifBook;
@@ -368,6 +381,7 @@
 				3C636F9E16A2F9750079C315 /* AFXMLRequestOperation.m in Sources */,
 				3C636F9F16A2F9750079C315 /* UIImageView+AFNetworking.m in Sources */,
 				3C636FB016A3239E0079C315 /* AnimatedGif.m in Sources */,
+				3C6BE41D16AC6DE6000FE50B /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

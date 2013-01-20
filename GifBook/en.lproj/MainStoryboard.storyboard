@@ -33,10 +33,12 @@
                             <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="sfU-yL-p2g">
                                 <items>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="23e-bc-Fyv"/>
-                                    <barButtonItem style="plain" systemItem="trash" id="iup-Cb-c5C"/>
+                                    <barButtonItem style="plain" systemItem="trash" id="iup-Cb-c5C">
+                                        <connections>
+                                            <action selector="trash:" destination="5" id="EUw-Qg-zYw"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="to5-QI-woa"/>
-                                    <barButtonItem image="star-off.png" style="plain" id="AM2-Xg-ALH"/>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="xiI-6r-a33"/>
                                     <barButtonItem style="plain" systemItem="action" id="QGs-YW-HWk">
                                         <connections>
                                             <action selector="share:" destination="5" id="wZl-AM-vZT"/>
@@ -69,9 +71,25 @@
             <point key="canvasLocation" x="896" y="-243"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="star-off.png" width="26" height="26"/>
-    </resources>
+    <classes>
+        <class className="ADSDataViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADSDataViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="share:"/>
+                <relationship kind="action" name="trash:"/>
+                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="labelItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="shareItem" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="ADSRootViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADSRootViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

@@ -33,7 +33,10 @@
     self.pageViewController = [[[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil] autorelease];
     self.pageViewController.delegate = self;
 
-    ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:0 storyboard:self.storyboard];
+    NSUserDefaults *tmpPrefs = [NSUserDefaults standardUserDefaults];
+    int tmpPrevLastPage = [tmpPrefs integerForKey:@"pageNumber"];
+    
+    ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:tmpPrevLastPage storyboard:self.storyboard];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationOrientationHorizontal animated:NO completion:NULL];
 
@@ -85,26 +88,47 @@
 #pragma mark - UIPageViewController delegate methods
 - (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
 {
-    // always one page on the left
+    UIViewController *currentViewController = self.pageViewController.viewControllers[0];
+    NSArray *viewControllers = @[currentViewController];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+    
     return UIPageViewControllerSpineLocationMin;
 }
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    if ( finished ) {
+        if ( [[pageViewController.viewControllers objectAtIndex:0] isKindOfClass:[ADSDataViewController class]] ) {
+            int tmpPageNumber = [[self modelController] indexOfViewController:(ADSDataViewController *)[pageViewController.viewControllers objectAtIndex:0]];
+            // NSLog(@"landed on page %d",tmpPageNumber);
+        
+            NSUserDefaults *tmpPrefs = [NSUserDefaults standardUserDefaults];
+            [tmpPrefs setInteger:tmpPageNumber forKey:@"pageNumber"];
+            [tmpPrefs synchronize];
+            
+        } else {
+            NSLog(@"landed on page with unknown view controller type");
+        }
+    }
+}
+
 
 #pragma mark - Page View Advance Request Notification
 - (void)advancePage:(NSNotification *)inNotification
 {
-        NSLog(@"root view controller received request to advance page: %@",inNotification);
+    //  NSLog(@"root view controller received request to advance page: %@",inNotification);
     if ( [inNotification.object isKindOfClass:[ADSDataViewController class]] ) {
 
         int currentPage = [self.modelController indexOfViewController:inNotification.object];
         ADSDataViewController *nextViewController = [self.modelController viewControllerAtIndex:currentPage+1 storyboard:self.storyboard];
         if ( nextViewController ) {
-        NSArray *viewControllers = @[nextViewController];
-        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+            NSArray *viewControllers = @[nextViewController];
+            [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
         } else {
-            NSLog(@"no more view controllers");
+            NSLog(@"no more view controllers, disregarding request to advance");
         }
     } else {
-        NSLog(@"request to advance page originated from unknown page controller class, disregarding");
+        NSLog(@"request to advance page originated from unknown page controller class, disregarding request to advance");
     }
 }
 

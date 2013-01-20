@@ -17,4 +17,7 @@
 - (ADSDataViewController *)viewControllerAtIndex:(NSUInteger)index storyboard:(UIStoryboard *)storyboard;
 - (NSUInteger)indexOfViewController:(ADSDataViewController *)viewController;
 
+- (void)addGif:(NSString *)inString;
+- (BOOL)removeGif:(NSString *)inString;
+
 @end
