@@ -307,22 +307,18 @@
         [self.spinner stopAnimating];
         [self.spinner setHidden:YES];
         
-        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.spinner.frame.origin.x-75, CGRectGetMaxY(self.spinner.frame)+5, self.spinner.frame.size.width+150, 45)];
+        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.spinner.frame.origin.x-75, self.spinner.frame.origin.y-5,
+                                                                      self.spinner.frame.size.width+150, self.spinner.frame.size.height+10)];
         [tmpLabel setAutoresizingMask:(UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin)];
         [tmpLabel setBackgroundColor:[UIColor clearColor]];
         [tmpLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
         [tmpLabel setTextAlignment:NSTextAlignmentCenter];
         [tmpLabel setFont:[UIFont boldSystemFontOfSize:18.0f]];
         [tmpLabel setNumberOfLines:2];
-        [tmpLabel setText:@"there was a problem\nwith the download or GIF"];
+        [tmpLabel setText:@"there was a problem\nwith the download or GIF file"];
         [self.view addSubview:tmpLabel];
         [tmpLabel release];
-        
-        UIImageView *tmpError = [[UIImageView alloc] initWithFrame:self.spinner.frame];
-        [tmpError setContentMode:UIViewContentModeCenter];
-        [tmpError setImage:[UIImage imageNamed:@"x.png"]];
-        [self.view addSubview:tmpError];
-        [tmpError release];
+
         
         // go to the next page
         // [self performSelector:@selector(nextPage) withObject:nil afterDelay:0.75f];
@@ -437,13 +433,8 @@
         [self.progressBar setHidden:YES];
         [self.spinner setHidden:YES];
         
-        UIImageView *tmpError = [[UIImageView alloc] initWithFrame:self.spinner.frame];
-        [tmpError setContentMode:UIViewContentModeCenter];
-        [tmpError setImage:[UIImage imageNamed:@"x.png"]];
-        [self.view addSubview:tmpError];
-        [tmpError release];
-
-        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.spinner.frame.origin.x-75, CGRectGetMaxY(self.spinner.frame)+5, self.spinner.frame.size.width+150, 45)];
+        UILabel *tmpLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.spinner.frame.origin.x-75, self.spinner.frame.origin.y-5,
+                                                                      self.spinner.frame.size.width+150, self.spinner.frame.size.height+10)];
         [tmpLabel setBackgroundColor:[UIColor clearColor]];
         [tmpLabel setTextColor:[UIColor colorWithWhite:1.0f alpha:0.5f]];
         [tmpLabel setTextAlignment:NSTextAlignmentCenter];

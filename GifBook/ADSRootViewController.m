@@ -41,6 +41,13 @@
         tmpPrevLastPage = self.modelController.numberOfPages-1;
     
     ADSDataViewController *startingViewController = [self.modelController viewControllerAtIndex:tmpPrevLastPage storyboard:self.storyboard];
+
+// for making icon parts ;)
+//    UIView *tmpCurtain = [[UIView alloc] initWithFrame:startingViewController.view.bounds];
+//    [tmpCurtain setBackgroundColor:[UIColor colorWithRed:222/255.0f green:0.0f blue:22/255.0f alpha:1.0f]];
+//    [startingViewController.view addSubview:tmpCurtain];
+//    [tmpCurtain release];
+    
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationOrientationHorizontal animated:NO completion:NULL];
 
