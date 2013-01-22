@@ -26,6 +26,7 @@
 }
 
 @property (strong, nonatomic) NSMutableArray *pageData;
+@property (strong, nonatomic) NSMutableArray *blacklist;
 
 @end
 
@@ -35,6 +36,7 @@
 - (void)dealloc
 {
     [_pageData release];
+    [_blacklist release];
     [super dealloc];
 }
 
@@ -44,14 +46,24 @@
     if (self) {
         // Create the data model.
         self.pageData = [NSMutableArray array];
+        self.blacklist = [NSMutableArray array];
         
         NSArray *cacheDirectories = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+        
         NSString *tmpAddressFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"gifs"];
         NSArray *tmpAddressesFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpAddressFilePath];
+
+        NSString *tmpBlacklistFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"bans"];
+        NSArray *tmpBlacklistFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpBlacklistFilePath];
 
         if ( tmpAddressesFromDisk && tmpAddressesFromDisk.count > 0 ) {
             NSLog(@"importing %d urls from disk",tmpAddressesFromDisk.count);
             [self.pageData addObjectsFromArray:tmpAddressesFromDisk];
+        }
+        
+        if ( tmpBlacklistFromDisk && tmpBlacklistFromDisk.count > 0 ) {
+            NSLog(@"importing %d banned urls from disk",tmpBlacklistFromDisk.count);
+            [self.pageData addObjectsFromArray:tmpBlacklistFromDisk];
         }
 
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
@@ -199,7 +211,15 @@
         NSURL *tmpNewURL = [NSURL URLWithString:inString];
         BOOL tmpShouldAdd = YES;
         
+        // check for dupes
         for ( NSURL *tmpURL in self.pageData ) {
+            if ( [tmpURL.absoluteString isEqualToString:tmpNewURL.absoluteString] ) {
+                tmpShouldAdd = NO;
+            }
+        }
+        
+        // check the blacklist
+        for ( NSURL *tmpURL in self.blacklist ) {
             if ( [tmpURL.absoluteString isEqualToString:tmpNewURL.absoluteString] ) {
                 tmpShouldAdd = NO;
             }
@@ -234,6 +254,7 @@
     for ( NSURL *tmpURL in self.pageData ) {
         if ( [tmpURL isEqual:tmpURLtoDelete] ) {
             [self.pageData removeObject:tmpURL];
+            [self.blacklist addObject:tmpURL];
             [self saveData];
             return YES;
         }
@@ -247,12 +268,19 @@
     // save updated list
     // save the update
     NSArray *cacheDirectories = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+
     NSString *tmpAddressFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"gifs"];
-    // NSArray *tmpAddressesFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpAddressFilePath];
     if ( [NSKeyedArchiver archiveRootObject:self.pageData toFile:tmpAddressFilePath] ) {
         // NSLog(@"saved updated list");
     } else {
         NSLog(@"error saving updated list");
+    }
+
+    NSString *tmpBlacklistFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"bans"];
+    if ( [NSKeyedArchiver archiveRootObject:self.blacklist toFile:tmpBlacklistFilePath] ) {
+        // NSLog(@"saved updated ban list");
+    } else {
+        NSLog(@"error saving updated ban list");
     }
 
 }

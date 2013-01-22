@@ -315,7 +315,7 @@
         [tmpLabel setTextAlignment:NSTextAlignmentCenter];
         [tmpLabel setFont:[UIFont boldSystemFontOfSize:18.0f]];
         [tmpLabel setNumberOfLines:2];
-        [tmpLabel setText:@"there was a problem\nwith the download or GIF file"];
+        [tmpLabel setText:@"there was a problem\nwith the download or file"];
         [self.view addSubview:tmpLabel];
         [tmpLabel release];
 
@@ -440,7 +440,7 @@
         [tmpLabel setTextAlignment:NSTextAlignmentCenter];
         [tmpLabel setFont:[UIFont boldSystemFontOfSize:18.0f]];
         [tmpLabel setNumberOfLines:2];
-        [tmpLabel setText:@"offline"];
+        [tmpLabel setText:@"no internet connection"];
         [self.view addSubview:tmpLabel];
         [tmpLabel release];
         
