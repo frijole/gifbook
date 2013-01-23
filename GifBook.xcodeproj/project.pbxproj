@@ -26,6 +26,8 @@
 		3C2EB50B16AF97AF003381EE /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2EB50A16AF97AF003381EE /* Default-Landscape~ipad.png */; };
 		3C2EB50D16AF97B3003381EE /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2EB50C16AF97B3003381EE /* Default-Portrait@2x~ipad.png */; };
 		3C2EB50F16AF97B6003381EE /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C2EB50E16AF97B6003381EE /* Default-Landscape@2x~ipad.png */; };
+		3C2EB51316B023A2003381EE /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2EB51216B023A2003381EE /* libTestFlight.a */; };
+		3C2EB51516B023FC003381EE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C2EB51416B023FC003381EE /* libz.dylib */; };
 		3C636F0F16A213050079C315 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C636F0D16A212FA0079C315 /* QuartzCore.framework */; };
 		3C636F9716A2F9750079C315 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636F8516A2F9750079C315 /* AFHTTPClient.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		3C636F9816A2F9750079C315 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C636F8716A2F9750079C315 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
@@ -101,6 +103,9 @@
 		3C2EB50A16AF97AF003381EE /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		3C2EB50C16AF97B3003381EE /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		3C2EB50E16AF97B6003381EE /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		3C2EB51116B021D6003381EE /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		3C2EB51216B023A2003381EE /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		3C2EB51416B023FC003381EE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3C636F0D16A212FA0079C315 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		3C636F8416A2F9750079C315 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFHTTPClient.h; path = AFNetworking/AFHTTPClient.h; sourceTree = "<group>"; };
 		3C636F8516A2F9750079C315 /* AFHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFHTTPClient.m; path = AFNetworking/AFHTTPClient.m; sourceTree = "<group>"; };
@@ -188,6 +193,8 @@
 				3C636FA516A30BD70079C315 /* MobileCoreServices.framework in Frameworks */,
 				3C636FA716A30BEA0079C315 /* SystemConfiguration.framework in Frameworks */,
 				3C636FA916A30E0E0079C315 /* Social.framework in Frameworks */,
+				3C2EB51316B023A2003381EE /* libTestFlight.a in Frameworks */,
+				3C2EB51516B023FC003381EE /* libz.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +334,7 @@
 		3CD0C25016A1266B00B229A3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C2EB51416B023FC003381EE /* libz.dylib */,
 				3CD0C25116A1266B00B229A3 /* UIKit.framework */,
 				3CD0C25316A1266B00B229A3 /* Foundation.framework */,
 				3CD0C25516A1266B00B229A3 /* CoreGraphics.framework */,
@@ -365,6 +373,8 @@
 				3CD0C25D16A1266B00B229A3 /* main.m */,
 				3CD0C25F16A1266B00B229A3 /* GifBook-Prefix.pch */,
 				3C6BE42316AC8350000FE50B /* Settings.bundle */,
+				3C2EB51116B021D6003381EE /* TestFlight.h */,
+				3C2EB51216B023A2003381EE /* libTestFlight.a */,
 				3C2EB51016AF97E2003381EE /* Launch Images */,
 				3CC1894216ACBFA40033FC02 /* Icon */,
 				3C6BE42616AC835F000FE50B /* Images */,
@@ -591,6 +601,10 @@
 				GCC_PREFIX_HEADER = "GifBook/GifBook-Prefix.pch";
 				INFOPLIST_FILE = "GifBook/GifBook-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/GifBook\"",
+				);
 				PRODUCT_NAME = GifBook;
 				WRAPPER_EXTENSION = app;
 			};
@@ -603,6 +617,10 @@
 				GCC_PREFIX_HEADER = "GifBook/GifBook-Prefix.pch";
 				INFOPLIST_FILE = "GifBook/GifBook-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/GifBook\"",
+				);
 				PRODUCT_NAME = GifBook;
 				WRAPPER_EXTENSION = app;
 			};

@@ -35,6 +35,12 @@
 {
     [_imageView release];
     [_dataObject release];
+    [_spinner release];
+    [_progressBar release];
+    [_logoImageView release];
+    [_navbar release];
+    [_footerView release];
+    [_playButton release];
     [super dealloc];
 }
 
@@ -122,6 +128,9 @@
 {
     // tapped
     
+    // log it
+    [TestFlight passCheckpoint:@"gif_tapped"];
+
     if ( [self.footerView isHidden] ) {
 //        [self performSelector:@selector(showFooter) withObject:nil afterDelay:0.2f];
         [self showFooter];
@@ -135,6 +144,9 @@
 - (void)doubleTapped
 {
     // two taps
+
+    // log it
+    [TestFlight passCheckpoint:@"gif_doubletapped"];
 
     [UIView animateWithDuration:0.2f
                      animations:^{
@@ -162,6 +174,9 @@
 
 - (void)showFooter
 {
+    // log it
+    [TestFlight passCheckpoint:@"footer_show"];
+    
     // reset the timer: cancel scheduled requests and call a new one
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     
@@ -196,6 +211,9 @@
 
 - (void)hideFooter
 {
+    // log it
+    [TestFlight passCheckpoint:@"footer_hide"];
+    
     if ( self.footerView && [self.footerView isHidden] == NO ) {
        
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
@@ -300,6 +318,9 @@
 - (void)startAutoplay:(id)sender
 {
     if ( !self.autoPlay ) {
+        // log it
+        [TestFlight passCheckpoint:@"autoplay_started"];
+        
         // set the flag
         [self setAutoPlay:YES];
         
@@ -312,6 +333,9 @@
         // and advance after a short delay
         [self performSelector:@selector(nextPage) withObject:nil afterDelay:1.0f];
     } else {
+        // log it
+        [TestFlight passCheckpoint:@"autoplay_stopped"];
+        
         // set the flag
         [self setAutoPlay:NO];
 
@@ -354,6 +378,8 @@
 
 - (void)gifFailed:(NSNotification *)sender
 {
+    // log it
+    [TestFlight passCheckpoint:@"gif_failed"];
 
     if ( [sender object] == self.imageView ) {
 //        NSLog(@"this view controller's gif failed: %@",sender);
@@ -408,6 +434,9 @@
 
 - (void)share:(id)sender
 {
+    // log it
+    [TestFlight passCheckpoint:@"gif_share"];
+
     // cancel any pending advances
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 
@@ -435,6 +464,9 @@
 
 - (void)trash:(id)sender
 {
+    // log it
+    [TestFlight passCheckpoint:@"gif_deleted"];
+
     // cancel any pending advances
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 
