@@ -35,12 +35,6 @@
 {
     [_imageView release];
     [_dataObject release];
-    [_spinner release];
-    [_progressBar release];
-    [_logoImageView release];
-    [_navbar release];
-    [_footerView release];
-    [_playButton release];
     [super dealloc];
 }
 
