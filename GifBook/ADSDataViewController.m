@@ -161,6 +161,13 @@
 
 - (void)showFooter
 {
+    // reset the timer: cancel scheduled requests and call a new one
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    
+    if ( self.autoPlay ) {
+        [self performSelector:@selector(nextPage) withObject:nil afterDelay:5.0f];
+    }
+    
     if ( self.footerView && [self.footerView isHidden] ) {
         
         [self.footerView setAlpha:0.0f];    // just to be sure

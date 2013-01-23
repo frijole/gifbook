@@ -30,34 +30,34 @@
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="13" customClass="UIImageView">
                                 <color key="backgroundColor" red="1" green="0.1764705882352941" blue="0.19215686274509802" alpha="0.0" colorSpace="calibratedRGB"/>
                             </view>
-                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="sfU-yL-p2g">
-                                <items>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="23e-bc-Fyv"/>
-                                    <barButtonItem image="rw.png" style="plain" id="iup-Cb-c5C">
-                                        <connections>
-                                            <action selector="rewind:" destination="5" id="pMZ-lz-g5t"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="to5-QI-woa"/>
-                                    <barButtonItem image="play.png" style="plain" id="wuU-J6-2BL">
-                                        <connections>
-                                            <action selector="startAutoplay:" destination="5" id="Err-St-mX4"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ggh-08-XFj"/>
-                                    <barButtonItem image="ff.png" style="plain" id="QGs-YW-HWk">
-                                        <connections>
-                                            <action selector="fastforward:" destination="5" id="IrX-ux-VoM"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="oJU-xu-Qm6"/>
-                                </items>
-                            </toolbar>
                             <navigationBar hidden="YES" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="xut-A1-fq8">
                                 <items>
                                     <navigationItem title="17 of 42" id="DNA-gk-2H4"/>
                                 </items>
                             </navigationBar>
+                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="sfU-yL-p2g">
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="PQA-W3-xSw"/>
+                                    <barButtonItem image="rw.png" style="plain" id="iup-Cb-c5C">
+                                        <connections>
+                                            <action selector="rewind:" destination="5" id="pMZ-lz-g5t"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="MXO-iA-lEA"/>
+                                    <barButtonItem image="play.png" style="plain" id="wuU-J6-2BL">
+                                        <connections>
+                                            <action selector="startAutoplay:" destination="5" id="Err-St-mX4"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="uHL-Oa-q68"/>
+                                    <barButtonItem image="ff.png" style="plain" id="QGs-YW-HWk">
+                                        <connections>
+                                            <action selector="fastforward:" destination="5" id="IrX-ux-VoM"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ggh-08-XFj"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>

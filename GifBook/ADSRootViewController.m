@@ -140,7 +140,13 @@
             NSArray *viewControllers = @[nextViewController];
             [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
         } else {
-            NSLog(@"no more view controllers, disregarding request to advance");
+            NSLog(@"no more view controllers, loading previous...");
+            nextViewController = [self.modelController viewControllerAtIndex:currentPage-1 storyboard:self.storyboard];
+            if ( nextViewController ) {
+                [nextViewController setAutoPlay:[inNotification.object autoPlay]];
+                NSArray *viewControllers = @[nextViewController];
+                [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
+            }
         }
     } else {
         NSLog(@"request to advance page originated from unknown page controller class, disregarding request to advance");
