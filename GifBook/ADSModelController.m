@@ -48,39 +48,47 @@
         self.pageData = [NSMutableArray array];
         self.blacklist = [NSMutableArray array];
         
-        NSArray *cacheDirectories = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
         
-        NSString *tmpAddressFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"gifs"];
-        NSArray *tmpAddressesFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpAddressFilePath];
-
-        NSString *tmpBlacklistFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"bans"];
-        NSArray *tmpBlacklistFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpBlacklistFilePath];
-
-        if ( tmpAddressesFromDisk && tmpAddressesFromDisk.count > 0 ) {
-            NSLog(@"importing %d urls from disk",tmpAddressesFromDisk.count);
-            [self.pageData addObjectsFromArray:tmpAddressesFromDisk];
-        }
-        
-        if ( tmpBlacklistFromDisk && tmpBlacklistFromDisk.count > 0 ) {
-            NSLog(@"importing %d banned urls from disk",tmpBlacklistFromDisk.count);
-            [self.pageData addObjectsFromArray:tmpBlacklistFromDisk];
-        }
-
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        if ( [[prefs objectForKey:@"resetURLs"] boolValue] ) {
+            // remove the saved page number
+            [prefs removeObjectForKey:@"pageNumber"];
+            // don't load the saves.
+        } else {
+            // load the saves
+            
+            NSArray *cacheDirectories = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+            
+            NSString *tmpAddressFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"gifs"];
+            NSArray *tmpAddressesFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpAddressFilePath];
+            
+            NSString *tmpBlacklistFilePath = [NSString stringWithFormat:@"%@/%@",[cacheDirectories objectAtIndex:0],@"bans"];
+            NSArray *tmpBlacklistFromDisk = [NSKeyedUnarchiver unarchiveObjectWithFile:tmpBlacklistFilePath];
+            
+            if ( tmpAddressesFromDisk && tmpAddressesFromDisk.count > 0 ) {
+                NSLog(@"importing %d urls from disk",tmpAddressesFromDisk.count);
+                [self.pageData addObjectsFromArray:tmpAddressesFromDisk];
+            }
+            
+            if ( tmpBlacklistFromDisk && tmpBlacklistFromDisk.count > 0 ) {
+                NSLog(@"importing %d banned urls from disk",tmpBlacklistFromDisk.count);
+                [self.pageData addObjectsFromArray:tmpBlacklistFromDisk];
+            }
+            
+        }
         
-        // we tried to read from disk but didn't get anything, load the default
-        // ...or if the "resetURLs" preferece is set to yes
-        if ( self.pageData.count == 0 || [[prefs objectForKey:@"resetURLs"] boolValue] ) {
+        
+        // we tried to read from disk (or skipped it) and didn't get anything, load the default
+        if ( self.pageData.count == 0 ) {
         
             for ( NSString *gifAddress in [NSArray arrayWithObjects:@"http://25.media.tumblr.com/0a9f27187f486be9d24a4760b89ac03a/tumblr_mgn52pl4hI1qg39ewo1_500.gif",
                                            @"http://25.media.tumblr.com/4d6bfe7484da35cf9dd235d60109fe47/tumblr_mg6ld5tbaG1qehntzo1_500.gif",
                                            @"http://24.media.tumblr.com/tumblr_m7dbzmGd4n1qzqdulo1_500.gif",
                                            @"http://24.media.tumblr.com/1e56a4ab8fda12c8e396fe02a850939a/tumblr_mg9x5pQUlH1qd4q8ao1_500.gif",
+                                           @"http://thismight.be/offensive/uploads/2011/05/27/image/315413_%5Btmbar%5D%20volvo%2C%20literally.gif",
+                                           @"http://i.imgur.com/xajwt.gif",
                                            nil] ) {
-                NSURL *tmpGIFUrl = [NSURL URLWithString:gifAddress];
-                if ( tmpGIFUrl ) {
-                    [self.pageData addObject:tmpGIFUrl];
-                }
+                    [self addGif:gifAddress];
             }
             
             // un-set preference if necessary
@@ -212,7 +220,8 @@
         // NSLog(@"gif contained https, discarding");
         [self getAGif];
     } else if ( [inString rangeOfString:@"http"].location != NSNotFound &&
-               [inString rangeOfString:@"gif"].location != NSNotFound ) {
+               [inString rangeOfString:@"gif"].location != NSNotFound &&
+               [inString rangeOfString:@"meatspin"].location == NSNotFound ) {
         NSURL *tmpNewURL = [NSURL URLWithString:inString];
         BOOL tmpShouldAdd = YES;
         
@@ -229,7 +238,7 @@
                 tmpShouldAdd = NO;
             }
         }
-        
+
         if ( tmpShouldAdd ) {
             [self.pageData addObject:tmpNewURL];
         } else {

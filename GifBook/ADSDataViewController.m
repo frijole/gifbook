@@ -56,6 +56,7 @@
     [self.imageView addGestureRecognizer:tmpTapRecognizer];
     [tmpTapRecognizer release];
 
+    
     CGRect tmpLogoFrame = self.view.bounds;
     tmpLogoFrame.origin.y += 20;
     tmpLogoFrame.size.height -= 120;
@@ -282,7 +283,7 @@
         // Create a request.
         NSURLRequest *tmpRequest = [NSURLRequest requestWithURL:self.dataObject
                                                   cachePolicy:NSURLRequestReturnCacheDataElseLoad
-                                                timeoutInterval:INT_MAX];
+                                                timeoutInterval:10]; // only 10 seconds before we bail.
         // create the connection with the request
         // and start loading the data
         _urlConnection = [[NSURLConnection alloc] initWithRequest:tmpRequest delegate:self];
@@ -301,7 +302,10 @@
     if ( !self.autoPlay ) {
         // set the flag
         [self setAutoPlay:YES];
-
+        
+        // disable screen dim/sleep
+        [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+        
         // update the button
         [self.playButton setImage:[UIImage imageNamed:@"pause.png"]];
         
@@ -311,6 +315,9 @@
         // set the flag
         [self setAutoPlay:NO];
 
+        // enable screen dim/sleep
+        [[UIApplication sharedApplication] setIdleTimerDisabled:NO];
+        
         // update the button
         [self.playButton setImage:[UIImage imageNamed:@"play.png"]];
         
@@ -332,7 +339,7 @@
         // autoplay? start timer
         if ( self.autoPlay ) {
             
-            if ( self.imageView.animationDuration > 5 ) {
+            if ( self.imageView.animationDuration > 3 ) {
                 [self performSelector:@selector(nextPage) withObject:nil afterDelay:(2.5f*self.imageView.animationDuration)];
             } else {
                 [self performSelector:@selector(nextPage) withObject:nil afterDelay:5.0f];
