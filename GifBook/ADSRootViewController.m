@@ -136,6 +136,7 @@
         int currentPage = [self.modelController indexOfViewController:inNotification.object];
         ADSDataViewController *nextViewController = [self.modelController viewControllerAtIndex:currentPage+1 storyboard:self.storyboard];
         if ( nextViewController ) {
+            [nextViewController setAutoPlay:[inNotification.object autoPlay]];
             NSArray *viewControllers = @[nextViewController];
             [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:NULL];
         } else {

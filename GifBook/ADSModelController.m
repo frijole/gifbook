@@ -138,7 +138,9 @@
     }
     
     index--;
-    return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    ADSDataViewController *tmpPrevVC = [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    [tmpPrevVC setAutoPlay:[(ADSDataViewController *)viewController autoPlay]];
+    return tmpPrevVC;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
@@ -152,7 +154,10 @@
     if (index == [self.pageData count]) {
         return nil;
     }
-    return [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    
+    ADSDataViewController *tmpNextVC = [self viewControllerAtIndex:index storyboard:viewController.storyboard];
+    [tmpNextVC setAutoPlay:[(ADSDataViewController *)viewController autoPlay]];
+    return tmpNextVC;
 }
 
 #pragma mark - Web Updating

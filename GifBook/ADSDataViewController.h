@@ -11,13 +11,16 @@
 
 @interface ADSDataViewController : UIViewController
 
+@property (nonatomic) BOOL autoPlay;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navbar;
 @property (strong, nonatomic) IBOutlet UIView *footerView;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *playButton;
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) id dataObject;
 
 @property (strong, nonatomic) ADSModelController *modelController;
 
+- (IBAction)startAutoplay:(id)sender;
 - (IBAction)rewind:(id)sender;
 - (IBAction)fastforward:(id)sender;
 

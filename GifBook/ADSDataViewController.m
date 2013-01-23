@@ -95,20 +95,20 @@
         
         UIButton *tmpButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [tmpButton setFrame:CGRectMake(0, 0, 30, 30)];
-        [tmpButton setImage:[UIImage imageNamed:@"rw.png"] forState:UIControlStateNormal];
+        [tmpButton setImage:[UIImage imageNamed:@"trash.png"] forState:UIControlStateNormal];
         [tmpButton.imageView setContentMode:UIViewContentModeCenter];
         [tmpButton setShowsTouchWhenHighlighted:YES];
-        [tmpButton addTarget:self action:@selector(rewind:) forControlEvents:UIControlEventTouchUpInside];
+        [tmpButton addTarget:self action:@selector(trash:) forControlEvents:UIControlEventTouchUpInside];
         UIBarButtonItem *tmpBBI = [[UIBarButtonItem alloc] initWithCustomView:tmpButton];
         [tmpNavItem setLeftBarButtonItem:tmpBBI];
         [tmpBBI release];
 
         tmpButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [tmpButton setFrame:CGRectMake(0, 0, 30, 30)];
-        [tmpButton setImage:[UIImage imageNamed:@"ff.png"] forState:UIControlStateNormal];
+        [tmpButton setImage:[UIImage imageNamed:@"share.png"] forState:UIControlStateNormal];
         [tmpButton.imageView setContentMode:UIViewContentModeCenter];
         [tmpButton setShowsTouchWhenHighlighted:YES];
-        [tmpButton addTarget:self action:@selector(fastforward:) forControlEvents:UIControlEventTouchUpInside];
+        [tmpButton addTarget:self action:@selector(share:) forControlEvents:UIControlEventTouchUpInside];
         tmpBBI = [[UIBarButtonItem alloc] initWithCustomView:tmpButton];
         [tmpNavItem setRightBarButtonItem:tmpBBI];
         [tmpBBI release];
@@ -179,7 +179,7 @@
                          }
          completion:^(BOOL finished) {
              if ( finished ) {
-                 [self performSelector:@selector(hideFooter) withObject:nil afterDelay:5.0f];
+                 // [self performSelector:@selector(hideFooter) withObject:nil afterDelay:5.0f];
              }
          }
          ];
@@ -220,6 +220,15 @@
 
     [self.spinner setHidden:YES];
     [self.logoImageView setHidden:NO];
+    
+    // check autoplay, configure toolbar button
+    if ( self.autoPlay ) {
+        // set the button
+        [self.playButton setImage:[UIImage imageNamed:@"pause.png"]];
+    } else {
+        [self.playButton setImage:[UIImage imageNamed:@"play.png"]];
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -280,6 +289,29 @@
     }
 }
 
+- (void)startAutoplay:(id)sender
+{
+    if ( !self.autoPlay ) {
+        // set the flag
+        [self setAutoPlay:YES];
+
+        // update the button
+        [self.playButton setImage:[UIImage imageNamed:@"pause.png"]];
+        
+        // and advance after a short delay
+        [self performSelector:@selector(nextPage) withObject:nil afterDelay:1.0f];
+    } else {
+        // set the flag
+        [self setAutoPlay:NO];
+
+        // update the button
+        [self.playButton setImage:[UIImage imageNamed:@"play.png"]];
+        
+        // cancel scheduled advance request
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(nextPage) object:nil];
+    }
+}
+
 - (void)gifLoaded:(NSNotification *)sender
 {
 //    NSLog(@"gifLoaded: %@",sender);
@@ -289,6 +321,18 @@
         [_logoImageView setHidden:YES];
         [_progressBar setHidden:YES];
         [_imageView setHidden:NO];
+        
+        // autoplay? start timer
+        if ( self.autoPlay ) {
+            
+            if ( self.imageView.animationDuration > 5 ) {
+                [self performSelector:@selector(nextPage) withObject:nil afterDelay:(2.5f*self.imageView.animationDuration)];
+            } else {
+                [self performSelector:@selector(nextPage) withObject:nil afterDelay:5.0f];
+            }
+            
+        }
+
     } else {
 //        NSLog(@"loadedGif received from %p but current image view is %p",sender.object,self.imageView);
     }
@@ -350,6 +394,9 @@
 
 - (void)share:(id)sender
 {
+    // cancel any pending advances
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+
     if ( !self.isSharing ) {
         // share it
         [self setIsSharing:YES];
@@ -374,6 +421,9 @@
 
 - (void)trash:(id)sender
 {
+    // cancel any pending advances
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+
     if ( self.modelController ) {
 
         // request an advance first, while the mode vc can still get index of the current page via its dataobject
@@ -393,7 +443,16 @@
 {
     NSInteger tmpStatusCode_ = [response statusCode];
     if (tmpStatusCode_ == 200) {
-        _downloadSize = [response expectedContentLength];
+    
+        if ( response.expectedContentLength > 5*pow(2, 20) ) {
+            // too big
+            [self gifFailed:[NSNotification notificationWithName:@"gifFailed" object:self.imageView]];
+            [connection cancel];
+        } else {
+            _downloadSize = [response expectedContentLength];
+        }
+    
+    
     } if ( tmpStatusCode_ == 404 ) {
         // make a fake notification
         NSLog(@"Download failed: %@ %@", @"404", response.URL);
@@ -410,8 +469,7 @@
     [self.progressBar setProgress:(_receivedData.length/_downloadSize) animated:YES];
 }
 
-- (void)connection:(NSURLConnection *)connection
-  didFailWithError:(NSError *)error
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     // release the connection, and the data object
     [connection release];

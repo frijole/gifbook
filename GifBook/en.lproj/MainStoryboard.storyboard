@@ -33,15 +33,21 @@
                             <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="sfU-yL-p2g">
                                 <items>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="23e-bc-Fyv"/>
-                                    <barButtonItem style="plain" systemItem="trash" id="iup-Cb-c5C">
+                                    <barButtonItem image="rw.png" style="plain" id="iup-Cb-c5C">
                                         <connections>
-                                            <action selector="trash:" destination="5" id="KQk-K6-4Xn"/>
+                                            <action selector="rewind:" destination="5" id="pMZ-lz-g5t"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="to5-QI-woa"/>
-                                    <barButtonItem style="plain" systemItem="action" id="QGs-YW-HWk">
+                                    <barButtonItem image="play.png" style="plain" id="wuU-J6-2BL">
                                         <connections>
-                                            <action selector="share:" destination="5" id="sxB-5C-Zty"/>
+                                            <action selector="startAutoplay:" destination="5" id="Err-St-mX4"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="ggh-08-XFj"/>
+                                    <barButtonItem image="ff.png" style="plain" id="QGs-YW-HWk">
+                                        <connections>
+                                            <action selector="fastforward:" destination="5" id="IrX-ux-VoM"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="oJU-xu-Qm6"/>
@@ -75,6 +81,7 @@
                         <outlet property="footerView" destination="sfU-yL-p2g" id="pDB-mD-Mf3"/>
                         <outlet property="imageView" destination="13" id="3hf-Le-LY5"/>
                         <outlet property="navbar" destination="xut-A1-fq8" id="z5g-Ef-qkb"/>
+                        <outlet property="playButton" destination="wuU-J6-2BL" id="hSj-cz-3dx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6" sceneMemberID="firstResponder"/>
@@ -82,6 +89,33 @@
             <point key="canvasLocation" x="896" y="-243"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ff.png" width="33" height="22"/>
+        <image name="play.png" width="33" height="22"/>
+        <image name="rw.png" width="33" height="22"/>
+    </resources>
+    <classes>
+        <class className="ADSDataViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADSDataViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="fastforward:"/>
+                <relationship kind="action" name="rewind:"/>
+                <relationship kind="action" name="share:"/>
+                <relationship kind="action" name="startAutoplay:"/>
+                <relationship kind="action" name="trash:"/>
+                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="navbar" candidateClass="UINavigationBar"/>
+                <relationship kind="outlet" name="playButton" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="ADSRootViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ADSRootViewController.h"/>
+        </class>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
