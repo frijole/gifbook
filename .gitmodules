@@ -10,3 +10,6 @@
 [submodule "submodules/Animated-GIF-iPhone"]
 	path = submodules/Animated-GIF-iPhone
 	url = https://github.com/frijole/Animated-GIF-iPhone.git
+[submodule "submodules/popup"]
+	path = submodules/popup
+	url = https://github.com/shpakovski/Popup.git
